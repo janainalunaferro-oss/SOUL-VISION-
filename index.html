@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI da Equipe</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F3EE;
+  --surface: #FFFFFF;
+  --surface2: #ECEAE3;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.13);
+  --text: #1A1917;
+  --text2: #6B6A65;
+  --text3: #A09F99;
+  --purple: #534AB7; --purple-bg: #EEEDFE; --purple-text: #3C3489;
+  --teal: #1D9E75;   --teal-bg: #E1F5EE;   --teal-text: #085041;
+  --amber: #BA7517;  --amber-bg: #FAEEDA;  --amber-text: #633806;
+  --coral: #993C1D;  --coral-bg: #FAECE7;  --coral-text: #712B13;
+  --blue: #185FA5;   --blue-bg: #E6F1FB;   --blue-text: #0C447C;
+  --radius: 14px; --radius-sm: 8px;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-logo {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+}
+.header-logo svg { width: 18px; height: 18px; }
+.header-title { font-size: 15px; font-weight: 500; }
+.header-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.header-meta { font-size: 12px; color: var(--text3); }
+
+.hero {
+  padding: 3rem 2rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-label {
+  font-size: 11px; font-family: var(--mono); color: var(--text3);
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.hero-title {
+  font-size: 32px; font-weight: 300; line-height: 1.2; margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.hero-title strong { font-weight: 500; }
+.hero-desc { font-size: 14px; color: var(--text2); }
+
+.stats-bar {
+  max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+}
+.stat-label { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.stat-val { font-size: 22px; font-weight: 500; font-family: var(--mono); }
+.stat-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+.grid {
+  max-width: 1100px; margin: 2rem auto;
+  padding: 0 2rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.person-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.person-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.08);
+  border-color: var(--border2);
+}
+.card-top {
+  padding: 1.5rem 1.5rem 1rem;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 500; flex-shrink: 0;
+  font-family: var(--mono); letter-spacing: -.02em;
+}
+.person-name { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
+.person-disc { font-size: 12px; }
+.disc-tag {
+  display: inline-block; margin-top: 6px;
+  padding: 2px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 500;
+}
+.card-divider { height: 1px; background: var(--border); margin: 0 1.5rem; }
+.card-thermo {
+  padding: 1rem 1.5rem 1.5rem;
+  display: flex; align-items: center; gap: 14px;
+}
+.thermo-mini {
+  flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.thermo-track-mini {
+  width: 10px; border-radius: 5px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  position: relative; overflow: hidden;
+}
+.thermo-fill-mini {
+  width: 100%; position: absolute; bottom: 0; left: 0;
+  border-radius: 0 0 5px 5px;
+  transition: height .5s cubic-bezier(.4,0,.2,1);
+}
+.thermo-bulb-mini {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid; display: flex; align-items: center;
+  justify-content: center; font-size: 10px;
+}
+.thermo-info { flex: 1; }
+.thermo-pct { font-size: 26px; font-weight: 500; font-family: var(--mono); line-height: 1; margin-bottom: 3px; }
+.thermo-stage { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+.prog-bar-wrap { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.prog-bar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+.card-metas {
+  padding: 0 1.5rem 1.25rem;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.meta-row {
+  display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2);
+}
+.meta-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.card-footer {
+  padding: 10px 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.next-checkin { font-size: 11px; color: var(--text3); }
+.open-btn {
+  font-size: 12px; font-weight: 500; color: var(--purple);
+  display: flex; align-items: center; gap: 4px;
+  font-family: var(--mono);
+}
+.open-btn::after { content: "\2192"; }
+
+.empty-state {
+  font-size: 12px; color: var(--text3); font-style: italic;
+  padding: 4px 0 8px;
+}
+
+.updated-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); display: inline-block; margin-right: 4px;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".9"/>
+        <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
+        <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
+        <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".3"/>
+      </svg>
+    </div>
+    <div>
+      <div class="header-title">PDI da Equipe</div>
+      <div class="header-sub">plano de desenvolvimento individual</div>
+    </div>
+  </div>
+  <div class="header-meta" id="last-updated"></div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Gestão de pessoas</div>
+  <div class="hero-title"><strong>Acompanhamento</strong> de<br>desenvolvimento da equipe</div>
+  <div class="hero-desc">Clique em um colaborador para abrir a ficha completa de PDI.</div>
+</div>
+
+<div class="stats-bar" id="stats-bar">
+  <div class="stat-card">
+    <div class="stat-label">Colaboradores</div>
+    <div class="stat-val" id="stat-total">5</div>
+    <div class="stat-sub">com PDI ativo</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Progresso médio</div>
+    <div class="stat-val" id="stat-avg">—</div>
+    <div class="stat-sub">da equipe</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Check-ins realizados</div>
+    <div class="stat-val" id="stat-checkins">—</div>
+    <div class="stat-sub">no total</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Próximo vencimento</div>
+    <div class="stat-val" style="font-size:15px;padding-top:4px" id="stat-next">—</div>
+    <div class="stat-sub" id="stat-next-who"></div>
+  </div>
+</div>
+
+<div class="grid" id="cards-grid"></div>
+
+<script>
+const collaborators = [
+  { key:"pdi_julio",   nome:"Julio",   file:"PDI_Julio.html",   disc:"julio",   cargo:"" },
+  { key:"pdi_kemilly", nome:"Kemilly", file:"PDI_Kemilly.html", disc:"kemilly", cargo:"" },
+  { key:"pdi_lucas",   nome:"Lucas",   file:"PDI_Lucas.html",   disc:"lucas",   cargo:"" },
+  { key:"pdi_raphael", nome:"Raphael", file:"PDI_Raphael.html", disc:"raphael", cargo:"" },
+  { key:"pdi_toni",    nome:"Toni",    file:"PDI_Toni.html",    disc:"toni",    cargo:"" },
+];
+
+const discData = {
+  julio:   {label:"SI — Mediador Relacional",         color:"#1D9E75", bg:"#E1F5EE", textc:"#085041"},
+  kemilly: {label:"S — Estável Pura",                 color:"#185FA5", bg:"#E6F1FB", textc:"#0C447C"},
+  lucas:   {label:"ID — Influenciador Impulsionador", color:"#854F0B", bg:"#FAEEDA", textc:"#633806"},
+  raphael: {label:"S — Estável Puro",                 color:"#534AB7", bg:"#EEEDFE", textc:"#3C3489"},
+  toni:    {label:"SDC — Executor Resiliente",        color:"#993C1D", bg:"#FAECE7", textc:"#712B13"},
+};
+const metaCols = [
+  {c:"#534AB7"}, {c:"#1D9E75"}, {c:"#BA7517"}, {c:"#993C1D"},
+];
+const thermoStages = [
+  {min:0,  max:25, fill:"#F09595", bulbBg:"#FCEBEB", label:"Início da jornada"},
+  {min:25, max:50, fill:"#EF9F27", bulbBg:"#FAEEDA", label:"Em desenvolvimento"},
+  {min:50, max:75, fill:"#97C459", bulbBg:"#EAF3DE", label:"Ganhando ritmo"},
+  {min:75, max:101,fill:"#1D9E75", bulbBg:"#E1F5EE", label:"Alta performance"},
+];
+
+function getThermoConfig(pct) {
+  return thermoStages.find(t => pct >= t.min && pct < t.max) || thermoStages[3];
+}
+function getOverallProgress(metas) {
+  if (!metas || !metas.length) return 0;
+  return Math.round(metas.reduce((a,m) => a + (m.prog||0), 0) / metas.length);
+}
+function getInitials(n) {
+  if (!n) return "??";
+  return n.trim().split(" ").filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+}
+function fmtDate(d) {
+  if (!d) return "—";
+  const [y,m,day] = d.split("-");
+  return `${day}/${m}/${y}`;
+}
+
+function loadPDIData(storageKey) {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function renderCard(c) {
+  const data = loadPDIData(c.key);
+  const disc = discData[c.disc];
+  const nome = (data && data.nome) || c.nome;
+  const cargo = (data && data.cargo) || c.cargo || "Cargo não preenchido";
+  const metas = (data && data.metas) || [];
+  const checkins = (data && data.checkins) || [];
+  const prazo = (data && data.prazo) || "";
+  const pct = getOverallProgress(metas);
+  const tc = getThermoConfig(pct);
+  const thermoH = 60;
+  const fillH = Math.round((pct/100) * thermoH);
+  const sym = pct>=75?"★":pct>=50?"↑":pct>=25?"~":"○";
+  const proxCheckin = checkins.filter(ci=>ci.status==="pendente"&&ci.data).sort((a,b)=>a.data.localeCompare(b.data))[0];
+  const realizados = checkins.filter(ci=>ci.status==="realizado").length;
+  const hasData = data && data.savedAt;
+
+  const metasHtml = metas.length
+    ? metas.slice(0,3).map((m,i) => `
+        <div class="meta-row">
+          <div class="meta-dot" style="background:${metaCols[i%4].c}"></div>
+          <span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${m.desc||"Meta sem descrição"}</span>
+          <span style="font-family:var(--mono);color:${metaCols[i%4].c};flex-shrink:0">${m.prog}%</span>
+        </div>`).join("")
+    : `<div class="empty-state">Nenhuma meta cadastrada ainda</div>`;
+
+  return `
+  <a class="person-card" href="${c.file}">
+    <div class="card-top">
+      <div class="avatar" style="background:${disc.bg};color:${disc.textc}">${getInitials(nome)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="person-name">${nome} ${hasData?"<span style=\"display:inline-block;width:6px;height:6px;border-radius:50%;background:#1D9E75;margin-left:4px;vertical-align:middle\"></span>":""}</div>
+        <div class="person-disc" style="color:var(--text2)">${cargo}</div>
+        <span class="disc-tag" style="background:${disc.bg};color:${disc.textc}">${disc.label}</span>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-thermo">
+      <div class="thermo-mini">
+        <div class="thermo-track-mini" style="height:${thermoH}px">
+          <div class="thermo-fill-mini" style="height:${fillH}px;background:${tc.fill}"></div>
+        </div>
+        <div class="thermo-bulb-mini" style="background:${tc.bulbBg};border-color:${tc.fill};color:${tc.fill}">${sym}</div>
+      </div>
+      <div class="thermo-info">
+        <div class="thermo-pct" style="color:${tc.fill}">${pct}%</div>
+        <div class="thermo-stage">${tc.label}</div>
+        <div class="prog-bar-wrap">
+          <div class="prog-bar-fill" style="width:${pct}%;background:${tc.fill}"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;font-size:11px;color:var(--text3);font-family:var(--mono)">
+          <span>${metas.length} meta${metas.length!==1?"s":""}</span>
+          <span>${realizados}/${checkins.length} check-ins</span>
+          ${prazo?`<span>prazo: ${fmtDate(prazo)}</span>`:""}
+        </div>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-metas">${metasHtml}</div>
+    <div class="card-footer">
+      <div class="next-checkin">
+        ${proxCheckin
+          ? `<span style="color:var(--amber-text)">próx. check-in: ${fmtDate(proxCheckin.data)}</span>`
+          : `<span>sem check-in agendado</span>`}
+      </div>
+      <div class="open-btn">abrir ficha</div>
+    </div>
+  </a>`;
+}
+
+function renderStats() {
+  const allData = collaborators.map(c => ({c, d: loadPDIData(c.key)}));
+  const withData = allData.filter(x => x.d);
+  const progs = collaborators.map(c => {
+    const d = loadPDIData(c.key);
+    return getOverallProgress(d ? d.metas : []);
+  });
+  const avg = progs.length ? Math.round(progs.reduce((a,b)=>a+b,0)/progs.length) : 0;
+  document.getElementById("stat-avg").textContent = avg + "%";
+
+  const totalCheckins = allData.reduce((a,x) => a + (x.d && x.d.checkins ? x.d.checkins.filter(ci=>ci.status==="realizado").length : 0), 0);
+  document.getElementById("stat-checkins").textContent = totalCheckins || "—";
+
+  // next deadline
+  let nextPrazo = null, nextWho = null;
+  allData.forEach(({c,d}) => {
+    if (d && d.prazo) {
+      if (!nextPrazo || d.prazo < nextPrazo) { nextPrazo = d.prazo; nextWho = (d.nome||c.nome); }
+    }
+  });
+  if (nextPrazo) {
+    document.getElementById("stat-next").textContent = fmtDate(nextPrazo);
+    document.getElementById("stat-next-who").textContent = nextWho;
+  }
+
+  // last updated
+  const times = allData.filter(x=>x.d&&x.d.savedAt).map(x=>x.d.savedAt).sort().reverse();
+  if (times.length) {
+    const dt = new Date(times[0]);
+    document.getElementById("last-updated").innerHTML =
+      `<span class="updated-dot"></span>atualizado em ${dt.toLocaleDateString("pt-BR")}`;
+  }
+}
+
+function render() {
+  const grid = document.getElementById("cards-grid");
+  grid.innerHTML = collaborators.map(c => renderCard(c)).join("");
+  renderStats();
+}
+
+render();
+
+// refresh if returning from a PDI file
+window.addEventListener("focus", render);
+</script>
+</body>
+</html>

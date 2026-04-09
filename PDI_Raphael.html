@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI — Raphael</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --surface2: #F0EFE9;
+  --border: rgba(0,0,0,0.09);
+  --border2: rgba(0,0,0,0.15);
+  --text: #1A1917;
+  --text2: #6B6A65;
+  --text3: #9E9D98;
+  --purple: #534AB7; --purple-bg: #EEEDFE; --purple-text: #3C3489;
+  --teal: #1D9E75;   --teal-bg: #E1F5EE;   --teal-text: #085041;
+  --amber: #BA7517;  --amber-bg: #FAEEDA;  --amber-text: #633806;
+  --coral: #993C1D;  --coral-bg: #FAECE7;  --coral-text: #712B13;
+  --blue: #185FA5;   --blue-bg: #E6F1FB;   --blue-text: #0C447C;
+  --red-fill: #F09595; --amber-fill: #EF9F27; --green-fill: #97C459; --teal-fill: #1D9E75;
+  --radius: 10px; --radius-sm: 6px;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
+input,textarea,select{font-family:var(--font);font-size:13px;color:var(--text);background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;width:100%;outline:none;resize:vertical;transition:border .15s,box-shadow .15s}
+input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(83,74,183,.1)}
+label{font-size:11px;color:var(--text2);display:block;margin-bottom:4px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+button{font-family:var(--font);font-size:13px;cursor:pointer;border-radius:var(--radius-sm);padding:8px 16px;border:1px solid var(--border2);background:var(--surface);color:var(--text);transition:all .15s;font-weight:400}
+button:hover{background:var(--surface2);border-color:var(--border2)}
+button:active{transform:scale(0.98)}
+.btn-primary{background:var(--purple);color:#fff;border-color:var(--purple);font-weight:500}
+.btn-primary:hover{background:var(--purple-text);border-color:var(--purple-text);color:#fff}
+.btn-sm{font-size:12px;padding:5px 12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.section-label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:500;flex-shrink:0;font-family:var(--mono)}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.chip{font-size:12px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text2);display:inline-block}
+.pill{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:500}
+
+.nav{display:flex;gap:4px;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
+.nav-btn{padding:7px 16px;border-radius:var(--radius-sm);font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--text2);transition:all .15s;flex:1;font-family:var(--font)}
+.nav-btn:hover{background:var(--surface2);color:var(--text)}
+.nav-btn.active{background:var(--purple-bg);color:var(--purple-text);font-weight:500}
+.view-section{display:none}
+.view-section.active{display:block}
+
+.thermo-track{width:38px;border-radius:19px;background:var(--surface2);border:1px solid var(--border2);position:relative;overflow:hidden}
+.thermo-fill{width:100%;position:absolute;bottom:0;left:0;border-radius:0 0 19px 19px;transition:height .6s cubic-bezier(.4,0,.2,1)}
+.thermo-bulb{width:54px;height:54px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:22px}
+.prog-bar-wrap{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:5px}
+.prog-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+.checkin-card{border-radius:var(--radius);padding:14px;margin-bottom:10px;border:1px solid var(--border);background:var(--surface)}
+.history-block{padding:12px;border-radius:var(--radius-sm);margin-bottom:8px;border-left:3px solid}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius-sm);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+.stat-card{background:var(--surface2);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.stat-label{font-size:10px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.stat-val{font-size:20px;font-weight:500}
+.save-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<div style="max-width:900px;margin:0 auto;padding:2rem 1rem">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+    <div>
+      <div style="font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:.06em;margin-bottom:4px">PLANO DE DESENVOLVIMENTO INDIVIDUAL</div>
+      <div style="font-size:22px;font-weight:500" id="title-name">Raphael</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="save-status" style="font-size:12px;color:var(--text3)"></span>
+      <button class="btn-primary btn-sm" onclick="saveData()">Salvar</button>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="setView('edit',this)">Ficha base</button>
+    <button class="nav-btn" onclick="setView('checkins',this)">Ciclos de check-in</button>
+    <button class="nav-btn" onclick="setView('view',this)">Painel visual</button>
+  </div>
+
+  <!-- FICHA BASE -->
+  <div id="edit-view" class="view-section active">
+    <div class="card" style="margin-bottom:1rem">
+      <div class="section-label">Identificação</div>
+      <div class="row2" style="margin-bottom:12px">
+        <div><label>Nome completo</label><input id="nome" type="text" placeholder="Nome do colaborador" oninput="autoSave()"></div>
+        <div><label>Cargo</label><input id="cargo" type="text" placeholder="Ex: Analista de Suporte" oninput="autoSave()"></div>
+      </div>
+      <div class="row3">
+        <div><label>Perfil DISC</label>
+          <select id="disc" onchange="autoSave()">
+            <option value="">Selecionar...</option>
+            <option value="julio">Julio — SI (Mediador Relacional)</option>
+            <option value="kemilly">Kemilly — S (Estável Pura)</option>
+            <option value="lucas">Lucas — ID (Influenciador Impulsionador)</option>
+            <option value="raphael">Raphael — S (Estável Puro)</option>
+            <option value="toni">Toni — SDC (Executor Resiliente)</option>
+          </select>
+        </div>
+        <div><label>Data da conversa inicial</label><input id="data_conv" type="date" oninput="autoSave()"></div>
+        <div><label>Prazo final do PDI</label><input id="prazo" type="date" oninput="autoSave()"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <div class="section-label">Forças identificadas na conversa</div>
+      <textarea id="forcas" rows="3" placeholder="Pontos fortes observados na conversa e como líder..." oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <div class="section-label">Aspiração de médio prazo</div>
+      <textarea id="aspiracao" rows="2" placeholder="Onde o colaborador quer chegar em 2-3 anos?" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <div class="section-label">Metas de desenvolvimento <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(até 4)</span></div>
+      <div id="metas-form"></div>
+      <button onclick="addMeta()" class="btn-sm" style="margin-top:8px">+ Adicionar meta</button>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <div class="section-label">Comprometimento assumido</div>
+      <textarea id="compromisso" rows="2" placeholder="O que o colaborador se comprometeu a fazer nos próximos 30 dias?" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="section-label">Observações</div>
+      <input id="obs" type="text" placeholder="Livro, curso, mentor, recurso necessário..." oninput="autoSave()">
+    </div>
+
+    <button class="btn-primary" onclick="setView('checkins',document.querySelectorAll('.nav-btn')[1])">Configurar ciclos de check-in →</button>
+  </div>
+
+  <!-- CHECK-INS -->
+  <div id="checkins-view" class="view-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <div style="font-size:13px;color:var(--text2)">Registre cada ciclo de acompanhamento com feedback e ações combinadas.</div>
+      <button onclick="addCheckin()" class="btn-sm">+ Novo ciclo</button>
+    </div>
+    <div id="checkins-form"></div>
+    <button class="btn-primary" style="margin-top:1rem" onclick="setView('view',document.querySelectorAll('.nav-btn')[2])">Ver painel visual →</button>
+  </div>
+
+  <!-- PAINEL -->
+  <div id="view-view" class="view-section">
+    <div id="panel-output"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'pdi_pdi_raphael';
+const discData = {
+  julio:   {label:'SI — Mediador Relacional',         color:'#1D9E75',bg:'#E1F5EE',textc:'#085041'},
+  kemilly: {label:'S — Estável Pura',                 color:'#185FA5',bg:'#E6F1FB',textc:'#0C447C'},
+  lucas:   {label:'ID — Influenciador Impulsionador', color:'#854F0B',bg:'#FAEEDA',textc:'#633806'},
+  raphael: {label:'S — Estável Puro',                 color:'#534AB7',bg:'#EEEDFE',textc:'#3C3489'},
+  toni:    {label:'SDC — Executor Resiliente',        color:'#993C1D',bg:'#FAECE7',textc:'#712B13'},
+};
+const metaCols=[
+  {c:'#534AB7',bg:'#EEEDFE',txt:'#3C3489'},
+  {c:'#1D9E75',bg:'#E1F5EE',txt:'#085041'},
+  {c:'#BA7517',bg:'#FAEEDA',txt:'#633806'},
+  {c:'#993C1D',bg:'#FAECE7',txt:'#712B13'},
+];
+const thermoStages=[
+  {min:0, max:25, fill:'#F09595',bulbBg:'#FCEBEB',label:'Início da jornada'},
+  {min:25,max:50, fill:'#EF9F27',bulbBg:'#FAEEDA',label:'Em desenvolvimento'},
+  {min:50,max:75, fill:'#97C459',bulbBg:'#EAF3DE',label:'Ganhando ritmo'},
+  {min:75,max:101,fill:'#1D9E75',bulbBg:'#E1F5EE',label:'Alta performance'},
+];
+const statusOpts=[
+  {v:'pendente', label:'Pendente',  bg:'#F1EFE8',c:'#5F5E5A'},
+  {v:'realizado',label:'Realizado', bg:'#EAF3DE',c:'#27500A'},
+  {v:'adiado',   label:'Adiado',    bg:'#FAEEDA',c:'#633806'},
+  {v:'cancelado',label:'Cancelado', bg:'#FCEBEB',c:'#791F1F'},
+];
+const cycleColors=['#534AB7','#1D9E75','#BA7517','#993C1D','#185FA5','#3B6D11'];
+
+let metas=[], checkins=[];
+let autoSaveTimer=null;
+
+function getInitials(n){if(!n)return'??';return n.trim().split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('')}
+function fmtDate(d){if(!d)return'—';const[y,m,day]=d.split('-');return`${day}/${m}/${y}`}
+function getOverallProgress(){if(!metas.length)return 0;return Math.round(metas.reduce((a,m)=>a+m.prog,0)/metas.length)}
+function getThermoConfig(pct){return thermoStages.find(t=>pct>=t.min&&pct<t.max)||thermoStages[3]}
+function getStatusObj(v){return statusOpts.find(s=>s.v===v)||statusOpts[0]}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function saveData(){
+  const data={
+    nome:document.getElementById('nome').value,
+    cargo:document.getElementById('cargo').value,
+    disc:document.getElementById('disc').value,
+    data_conv:document.getElementById('data_conv').value,
+    prazo:document.getElementById('prazo').value,
+    forcas:document.getElementById('forcas').value,
+    aspiracao:document.getElementById('aspiracao').value,
+    compromisso:document.getElementById('compromisso').value,
+    obs:document.getElementById('obs').value,
+    metas,checkins,
+    savedAt:new Date().toISOString()
+  };
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    const now=new Date();
+    document.getElementById('save-status').textContent=`Salvo às ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    showToast('Dados salvos com sucesso');
+  }catch(e){showToast('Erro ao salvar — tente novamente')}
+}
+
+function autoSave(){
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer=setTimeout(saveData,1200);
+}
+
+function loadData(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return;
+    const d=JSON.parse(raw);
+    if(d.nome)document.getElementById('nome').value=d.nome;
+    if(d.cargo)document.getElementById('cargo').value=d.cargo;
+    if(d.disc)document.getElementById('disc').value=d.disc;
+    if(d.data_conv)document.getElementById('data_conv').value=d.data_conv;
+    if(d.prazo)document.getElementById('prazo').value=d.prazo;
+    if(d.forcas)document.getElementById('forcas').value=d.forcas;
+    if(d.aspiracao)document.getElementById('aspiracao').value=d.aspiracao;
+    if(d.compromisso)document.getElementById('compromisso').value=d.compromisso;
+    if(d.obs)document.getElementById('obs').value=d.obs;
+    if(d.metas)metas=d.metas;
+    if(d.checkins)checkins=d.checkins;
+    if(d.savedAt){
+      const dt=new Date(d.savedAt);
+      document.getElementById('save-status').textContent=`Último save: ${fmtDate(dt.toISOString().split('T')[0])} ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}`;
+    }
+    renderMetasForm();
+    renderCheckinsForm();
+  }catch(e){}
+}
+
+function addMeta(){
+  if(metas.length>=4)return;
+  metas.push({desc:'',prazo:'',prog:0});
+  renderMetasForm(); autoSave();
+}
+function removeMeta(i){metas.splice(i,1);renderMetasForm();autoSave()}
+function renderMetasForm(){
+  const c=document.getElementById('metas-form');
+  c.innerHTML=metas.map((m,i)=>{
+    const col=metaCols[i%4];
+    return`<div style="background:var(--surface2);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;border-left:3px solid ${col.c}">
+      <div style="font-size:10px;font-weight:500;color:${col.c};margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)">Meta ${i+1}</div>
+      <div style="margin-bottom:8px"><label>Descrição</label><textarea rows="2" placeholder="Descreva a meta de desenvolvimento..." oninput="metas[${i}].desc=this.value;autoSave()">${m.desc}</textarea></div>
+      <div class="row2">
+        <div><label>Prazo</label><input type="date" value="${m.prazo}" oninput="metas[${i}].prazo=this.value;autoSave()"></div>
+        <div><label>Progresso: <span id="pv${i}" style="color:${col.c}">${m.prog}%</span></label>
+          <input type="range" min="0" max="100" step="5" value="${m.prog}" oninput="metas[${i}].prog=+this.value;document.getElementById('pv${i}').textContent=this.value+'%';autoSave()">
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:6px">
+        <button onclick="removeMeta(${i})" class="btn-sm" style="color:#A32D2D;border-color:#F09595;font-size:11px">remover</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addCheckin(){
+  checkins.push({data:'',status:'pendente',progresso:'',pontos:'',feedback:'',acoes:''});
+  renderCheckinsForm(); autoSave();
+}
+function removeCheckin(i){checkins.splice(i,1);renderCheckinsForm();autoSave()}
+function renderCheckinsForm(){
+  const c=document.getElementById('checkins-form');
+  if(!checkins.length){
+    c.innerHTML=`<div style="text-align:center;padding:2.5rem;color:var(--text2);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">Nenhum ciclo adicionado ainda.<br><span style="color:var(--text3)">Clique em "+ Novo ciclo" para começar.</span></div>`;
+    return;
+  }
+  c.innerHTML=checkins.map((ci,i)=>{
+    const cc=cycleColors[i%cycleColors.length];
+    return`<div class="checkin-card" style="border-left:3px solid ${cc}">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:26px;height:26px;border-radius:50%;background:${cc}18;color:${cc};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;font-family:var(--mono)">${i+1}</div>
+        <div style="font-size:14px;font-weight:500">Ciclo ${i+1}</div>
+        <div style="flex:1"></div>
+        <button onclick="removeCheckin(${i})" class="btn-sm" style="color:#A32D2D;border-color:#F09595;font-size:11px">remover</button>
+      </div>
+      <div class="row3" style="margin-bottom:10px">
+        <div><label>Data do encontro</label><input type="date" value="${ci.data}" oninput="checkins[${i}].data=this.value;autoSave()"></div>
+        <div><label>Status</label>
+          <select onchange="checkins[${i}].status=this.value;autoSave()">
+            ${statusOpts.map(s=>`<option value="${s.v}" ${ci.status===s.v?'selected':''}>${s.label}</option>`).join('')}
+          </select>
+        </div>
+        <div><label>Progresso neste ciclo</label>
+          <select onchange="checkins[${i}].progresso=this.value;autoSave()">
+            <option value="">Selecionar...</option>
+            <option ${ci.progresso==='acima'?'selected':''} value="acima">Acima do esperado</option>
+            <option ${ci.progresso==='no'?'selected':''} value="no">No esperado</option>
+            <option ${ci.progresso==='abaixo'?'selected':''} value="abaixo">Abaixo do esperado</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:10px"><label>Pontos discutidos</label><textarea rows="2" placeholder="O que foi abordado? Quais temas surgiram?" oninput="checkins[${i}].pontos=this.value;autoSave()">${ci.pontos}</textarea></div>
+      <div style="margin-bottom:10px"><label>Feedback dado ao colaborador</label><textarea rows="3" placeholder="O que você destacou como positivo? O que apontou para melhoria? Como ele/ela reagiu?" oninput="checkins[${i}].feedback=this.value;autoSave()">${ci.feedback}</textarea></div>
+      <div><label>Ações combinadas para o próximo período</label><textarea rows="2" placeholder="O que o colaborador ficou de fazer até o próximo check-in?" oninput="checkins[${i}].acoes=this.value;autoSave()">${ci.acoes}</textarea></div>
+    </div>`;
+  }).join('');
+}
+
+function setView(v,btn){
+  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(v+'-view').classList.add('active');
+  btn.classList.add('active');
+  if(v==='view')renderPanel();
+}
+
+function renderPanel(){
+  const nome=document.getElementById('nome').value||'Colaborador';
+  const cargo=document.getElementById('cargo').value||'';
+  const discKey=document.getElementById('disc').value;
+  const disc=discKey?discData[discKey]:null;
+  const forcas=document.getElementById('forcas').value;
+  const aspiracao=document.getElementById('aspiracao').value;
+  const compromisso=document.getElementById('compromisso').value;
+  const obs=document.getElementById('obs').value;
+  const prazo=document.getElementById('prazo').value;
+  const data_conv=document.getElementById('data_conv').value;
+  const initials=getInitials(nome);
+  const pct=getOverallProgress();
+  const tc=getThermoConfig(pct);
+  const thermoH=200;
+  const fillH=Math.round((pct/100)*thermoH);
+  const sym=pct>=75?'★':pct>=50?'↑':pct>=25?'~':'○';
+
+  const metasHtml=metas.length?metas.map((m,i)=>{
+    const col=metaCols[i%4];
+    return`<div style="padding:12px;border-radius:var(--radius-sm);margin-bottom:8px;background:var(--surface2);border-left:3px solid ${col.c}">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="width:22px;height:22px;border-radius:50%;background:${col.bg};color:${col.c};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px;font-family:var(--mono)">${i+1}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;line-height:1.5">${m.desc||'Meta sem descrição'}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px;display:flex;gap:10px">
+            <span style="color:${col.c};font-weight:500">${m.prog}%</span>
+            <span>prazo: ${fmtDate(m.prazo)}</span>
+          </div>
+          <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${m.prog}%;background:${col.c}"></div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join(''):`<div style="font-size:13px;color:var(--text2)">Nenhuma meta cadastrada.</div>`;
+
+  const progIcons={acima:'↑',no:'→',abaixo:'↓','':`?`};
+  const progColors={acima:'#27500A',no:'#0C447C',abaixo:'#791F1F','':`#5F5E5A`};
+  const progBgs={acima:'#EAF3DE',no:'#E6F1FB',abaixo:'#FCEBEB','':`#F1EFE8`};
+  const proxCheckin=checkins.filter(c=>c.status==='pendente'&&c.data).sort((a,b)=>a.data.localeCompare(b.data))[0];
+  const realizados=checkins.filter(c=>c.status==='realizado').length;
+
+  const histHtml=checkins.length?checkins.map((ci,i)=>{
+    const cc=cycleColors[i%cycleColors.length];
+    const st=getStatusObj(ci.status);
+    return`<div class="history-block" style="background:var(--surface2);border-left-color:${cc}">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;flex-wrap:wrap">
+        <div style="width:20px;height:20px;border-radius:50%;background:${cc}18;color:${cc};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;font-family:var(--mono)">${i+1}</div>
+        <span style="font-size:13px;font-weight:500">Ciclo ${i+1}</span>
+        <span style="font-size:12px;color:var(--text2)">${fmtDate(ci.data)}</span>
+        <span class="pill" style="background:${st.bg};color:${st.c}">${st.label}</span>
+        ${ci.progresso?`<span class="pill" style="background:${progBgs[ci.progresso]};color:${progColors[ci.progresso]}">${progIcons[ci.progresso]} ${ci.progresso==='acima'?'Acima':ci.progresso==='no'?'No esperado':'Abaixo'}</span>`:''}
+      </div>
+      ${ci.pontos?`<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Pontos discutidos</span><div style="font-size:13px;margin-top:3px;line-height:1.6">${ci.pontos}</div></div>`:''}
+      ${ci.feedback?`<div style="margin-bottom:6px;padding:8px 10px;background:var(--surface);border-radius:var(--radius-sm);border-left:2px solid ${cc}"><span style="font-size:10px;font-weight:500;color:${cc};text-transform:uppercase;letter-spacing:.05em">Feedback</span><div style="font-size:13px;margin-top:3px;line-height:1.6">${ci.feedback}</div></div>`:''}
+      ${ci.acoes?`<div><span style="font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Ações combinadas</span><div style="font-size:13px;margin-top:3px;line-height:1.6">${ci.acoes}</div></div>`:''}
+    </div>`;
+  }).join(''):`<div style="font-size:13px;color:var(--text2);padding:8px 0">Nenhum ciclo registrado.</div>`;
+
+  document.getElementById('panel-output').innerHTML=`
+  <div style="display:grid;grid-template-columns:1fr 180px;gap:1rem;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:1rem">
+
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="avatar" style="background:${disc?disc.bg:'#F1EFE8'};color:${disc?disc.textc:'#5F5E5A'}">${initials}</div>
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:500">${nome}</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:2px">${cargo}</div>
+            <div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:5px">
+              ${disc?`<span class="badge" style="background:${disc.bg};color:${disc.textc}">${disc.label}</span>`:''}
+              ${data_conv?`<span class="chip">Início: ${fmtDate(data_conv)}</span>`:''}
+              ${prazo?`<span class="chip">Prazo: ${fmtDate(prazo)}</span>`:''}
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px">
+          <div class="stat-card"><div class="stat-label">Progresso geral</div><div class="stat-val" style="color:${tc.fill}">${pct}%</div></div>
+          <div class="stat-card"><div class="stat-label">Ciclos realizados</div><div class="stat-val">${realizados}/${checkins.length}</div></div>
+          <div class="stat-card"><div class="stat-label">Próximo check-in</div><div style="font-size:14px;font-weight:500;margin-top:3px">${proxCheckin?fmtDate(proxCheckin.data):'—'}</div></div>
+        </div>
+      </div>
+
+      ${forcas?`<div class="card"><div class="section-label">Forças identificadas</div><div style="font-size:13px;line-height:1.7;white-space:pre-line">${forcas}</div></div>`:''}
+      ${aspiracao?`<div class="card"><div class="section-label">Aspiração de médio prazo</div><div style="font-size:13px;line-height:1.7;border-left:3px solid #AFA9EC;padding-left:10px">${aspiracao}</div></div>`:''}
+
+      <div class="card"><div class="section-label">Metas de desenvolvimento</div>${metasHtml}</div>
+      <div class="card"><div class="section-label">Histórico de check-ins</div>${histHtml}</div>
+
+      ${compromisso||obs?`<div class="card" style="background:var(--surface2);border:none">
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          ${compromisso?`<div style="flex:1"><div class="section-label">Compromisso assumido</div><div style="font-size:13px;line-height:1.6;margin-top:4px">${compromisso}</div></div>`:''}
+          ${obs?`<div style="flex:1"><div class="section-label">Observações</div><div style="font-size:13px;line-height:1.6;margin-top:4px">${obs}</div></div>`:''}
+        </div>
+      </div>`:''}
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;padding:1.25rem 1rem">
+      <div class="section-label" style="text-align:center;width:100%">Termômetro</div>
+      <div style="font-size:12px;font-weight:500;color:${tc.fill};text-align:center;margin-bottom:8px">${tc.label}</div>
+      <div style="font-size:28px;font-weight:500;color:${tc.fill};margin-bottom:10px;font-family:var(--mono)">${pct}%</div>
+      <div class="thermo-track" style="height:${thermoH}px;margin-bottom:10px">
+        <div class="thermo-fill" style="height:${fillH}px;background:${tc.fill}"></div>
+      </div>
+      <div class="thermo-bulb" style="background:${tc.bulbBg};border-color:${tc.fill};color:${tc.fill};margin-bottom:16px">${sym}</div>
+      <div style="width:100%;display:flex;flex-direction:column;gap:5px">
+        ${thermoStages.map(s=>`<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2)">
+          <div style="width:7px;height:7px;border-radius:50%;background:${s.fill};flex-shrink:0"></div>
+          <span>${s.min}% ${s.label}</span>
+        </div>`).join('')}
+      </div>
+      <div style="width:100%;margin-top:14px;display:flex;flex-direction:column;gap:6px">
+        <button onclick="setView('edit',document.querySelectorAll('.nav-btn')[0])" style="width:100%;font-size:12px;padding:6px">Editar ficha</button>
+        <button onclick="setView('checkins',document.querySelectorAll('.nav-btn')[1])" style="width:100%;font-size:12px;padding:6px">Check-ins</button>
+        <button onclick="window.print()" style="width:100%;font-size:12px;padding:6px">Imprimir</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Pre-fill DISC on load
+document.getElementById('disc').value='raphael';
+document.getElementById('nome').value='Raphael';
+document.getElementById('cargo').value='';
+
+loadData();
+if(!metas.length){metas.push({desc:'',prazo:'',prog:0});renderMetasForm();}
+renderCheckinsForm();
+</script>
+</body>
+</html>
