@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>PDI – Toni</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     :root {
       --primary: #4b2e83;
@@ -17,63 +18,504 @@
       --radius-md: 10px;
       --radius-pill: 999px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
     body {
-     <script>
-  (function () {
-    const STORAGE_KEY = 'PDI_TONI_V1';
-
-    function saveForm() {
-      const data = {};
-      document.querySelectorAll('input, textarea, select').forEach(el => {
-        if (!el.name && !el.id) return;
-        const key = el.name || el.id;
-        data[key] = el.value;
-      });
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      } catch (e) {
-        console.warn('Não foi possível salvar no navegador:', e);
-      }
+      background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%);
+      color: var(--text);
+      padding: 24px 16px 40px;
+      min-height: 100vh;
     }
 
-    function loadForm() {
-      let raw = null;
-      try {
-        raw = localStorage.getItem(STORAGE_KEY);
-      } catch (e) {
-        console.warn('Não foi possível ler do navegador:', e);
-      }
-      if (!raw) return;
-      let data;
-      try {
-        data = JSON.parse(raw);
-      } catch {
-        return;
-      }
-      document.querySelectorAll('input, textarea, select').forEach(el => {
-        if (!el.name && !el.id) return;
-        const key = el.name || el.id;
-        if (data[key] !== undefined) {
-          el.value = data[key];
-        }
-      });
+    .app { max-width: 900px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
-    function init() {
-      // Dá IDs ou names simples aos campos, se ainda não tiverem
-      let idx = 0;
-      document.querySelectorAll('input, textarea, select').forEach(el => {
-        if (!el.name && !el.id) {
-          el.id = 'field_' + (++idx);
-        }
-        el.addEventListener('input', saveForm);
-        el.addEventListener('change', saveForm);
-      });
-
-      loadForm();
+    .header-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    document.addEventListener('DOMContentLoaded', init);
-  })();
-</script>
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, #bfdbfe, #4b2e83);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #f9fafb;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .headline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .headline h1 { font-size: 20px; font-weight: 700; }
+    .headline p { font-size: 13px; color: var(--muted); }
+
+    .back-link {
+      font-size: 12px;
+      color: var(--primary);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(75,46,131,0.3);
+      background: rgba(75,46,131,0.03);
+      white-space: nowrap;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0,1.6fr) minmax(0,1.1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 820px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+
+    .panel h2 {
+      font-size: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel h2 span {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .section { margin-bottom: 14px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .field-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      flex: 1 1 140px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label { font-size: 12px; color: var(--muted); }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text);
+      background: #f9fafb;
+      resize: vertical;
+    }
+
+    textarea { min-height: 60px; }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid rgba(75,46,131,0.3);
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      font-size: 11px;
+      color: #92400e;
+      margin-top: 4px;
+    }
+
+    .pill small {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.8;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      background: #ecfdf3;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .disc-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .subtle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .goals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .goal-item {
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+      padding: 8px;
+      background: #f9fafb;
+    }
+
+    .goal-item input[type="text"] { background: transparent; }
+
+    .goal-line {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .side-section { margin-bottom: 16px; }
+    .side-section h3 {
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .side-section p {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .checkin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    .checkin-table th,
+    .checkin-table td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 6px 0;
+      text-align: left;
+    }
+
+    .checkin-table th {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .heatbar {
+      width: 100%;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .heatbar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+      width: 0;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    ul.quick {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    ul.quick li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-main">
+        <div class="avatar">T</div>
+        <div class="headline">
+          <h1>Plano de Desenvolvimento Individual – Toni</h1>
+          <p>Perfil DISC · Executor Resiliente · Trifatorial SDC</p>
+        </div>
+      </div>
+      <a class="back-link" href="index.html">← Voltar para o dashboard da equipe</a>
+    </header>
+
+    <div class="layout">
+      <!-- Coluna principal -->
+      <section class="panel">
+        <h2>
+          Ficha base do PDI
+          <span>Uso interno da consultoria</span>
+        </h2>
+
+        <!-- Identificação -->
+        <div class="section">
+          <div class="section-label">Identificação</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Nome completo</label>
+              <input type="text" value="Toni">
+            </div>
+            <div class="field">
+              <label>Cargo</label>
+              <input type="text" placeholder="Preencher na conversa">
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfil DISC -->
+        <div class="section">
+          <div class="section-label">Perfil DISC</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Perfil</label>
+              <select>
+                <option selected>Toni — SDC (Executor Resiliente)</option>
+                <option>Raphael — S (Estável Puro)</option>
+                <option>Lucas — ID (Influenciador Impulsionador)</option>
+                <option>Kemilly — S (Estável Pura)</option>
+                <option>Julio — SI (Mediador Relacional)</option>
+              </select>
+              <div class="pill">
+                <small>Trifatorial SDC</small>
+                Executor Resiliente
+              </div>
+            </div>
+            <div class="field">
+              <label>Datas</label>
+              <input type="date" placeholder="Data da conversa inicial">
+              <input type="date" style="margin-top:4px;" placeholder="Prazo final do PDI">
+            </div>
+          </div>
+
+          <p class="disc-note">
+            Seu perfil revela uma força tranquila e imparável. Sua base é a Estabilidade,
+            o que lhe confere uma paciência fora do comum para lidar com processos longos
+            e repetitivos. No entanto, sua Dominância mantém o foco no alvo e sua
+            Conformidade evita que o projeto saia dos trilhos por descuido técnico.
+            Você é aquela pessoa que transmite calma absoluta ao time em meio ao pânico,
+            mas que internamente não descansa até que a meta seja batida com perfeição.
+            Sua mente trabalha em silêncio e sua maior irritação são pessoas que buscam
+            atalhos éticos ou que desestruturam o ambiente com barulho e pouca entrega real.
+            Você é o trator silencioso da empresa.
+          </p>
+        </div>
+
+        <!-- Forças -->
+        <div class="section">
+          <div class="section-label">Forças identificadas na conversa</div>
+          <textarea placeholder="Liste as forças comportamentais e técnicas que emergiram da conversa (3–5 pontos)."></textarea>
+        </div>
+
+        <!-- Aspiração -->
+        <div class="section">
+          <div class="section-label">Aspiração de médio prazo (12–24 meses)</div>
+          <textarea placeholder="Descreva, com as palavras dele, o que deseja construir profissionalmente no próximo ciclo."></textarea>
+        </div>
+
+        <!-- Metas -->
+        <div class="section">
+          <div class="section-label">Metas de desenvolvimento (até 4)</div>
+          <p class="subtle">
+            Baseado no diagnóstico do relatório: separar problema x sentimento, expor ideias de melhoria e celebrar pequenas vitórias.
+          </p>
+
+          <div class="goals-list">
+            <div class="goal-item">
+              <label>Meta 1</label>
+              <input type="text" placeholder="Ex.: Expor ideias de melhoria de processo ao menos 1x por semana nas reuniões.">
+              <div class="goal-line">Indicador de progresso:</div>
+              <input type="text" placeholder="Ex.: nº de sugestões levadas / feedback da liderança.">
+            </div>
+
+            <div class="goal-item">
+              <label>Meta 2</label>
+              <input type="text" placeholder="Ex.: Separar problema profissional de sentimento pessoal em situações de pressão.">
+              <div class="goal-line">Indicador de progresso:</div>
+              <input type="text" placeholder="Ex.: nº de situações em que conseguiu se posicionar sem levar para o lado pessoal.">
+            </div>
+
+            <div class="goal-item">
+              <label>Meta 3</label>
+              <input type="text" placeholder="Ex.: Criar um ritual simples de celebrar pequenas vitórias semanais.">
+              <div class="goal-line">Indicador de progresso:</div>
+              <input type="text" placeholder="Ex.: registros de celebração / percepção de energia ao fim da semana.">
+            </div>
+
+            <div class="goal-item">
+              <label>Meta 4</label>
+              <input type="text" placeholder="Meta 4 (opcional)">
+              <div class="goal-line">Indicador de progresso:</div>
+              <input type="text" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprometimento -->
+        <div class="section">
+          <div class="section-label">Comprometimento assumido</div>
+          <textarea placeholder="Registre em 3–4 linhas o que foi combinado como responsabilidade dele no PDI."></textarea>
+        </div>
+
+        <!-- Observações da consultora -->
+        <div class="section">
+          <div class="section-label">Observações da consultora</div>
+          <textarea placeholder="Anotações só suas (triggers, limites, cuidado com carga, contexto pessoal, etc.)."></textarea>
+        </div>
+      </section>
+
+      <!-- Coluna lateral -->
+      <aside class="panel">
+        <div class="side-section">
+          <h3>Resumo comportamental (DISC)</h3>
+          <p>
+            <span class="badge">Driver central: Estabilidade + Integridade do sistema</span>
+          </p>
+          <p class="hint">
+            Seu maior medo básico é a instabilidade estratégica ou trair a confiança de quem depende de você.
+            Sua motivação principal é a integridade do sistema. Você valoriza a honestidade e a perseverança,
+            mantendo-se fiel aos seus deveres mesmo quando ninguém está olhando.<br><br>
+            Valor para a organização: você é a personificação da confiança operacional. Sua eficácia é máxima
+            na manutenção de contas estratégicas e gestão de infraestrutura. Você garante que a empresa tenha
+            alicerces que não tremem sob pressão, sendo essencial para projetos que exigem anos de dedicação
+            constante e rigorosa execução técnica.
+          </p>
+        </div>
+
+        <div class="side-section">
+          <h3>Diagnóstico de desenvolvimento</h3>
+          <p class="hint">
+            Para aumentar sua visibilidade, você precisa:<br>
+            · Aprender a separar problemas profissionais de sentimentos pessoais para não sofrer em silêncio;<br>
+            · Expor suas ideias de melhoria de processo, não esperando que alguém pergunte para você falar;<br>
+            · Celebrar as pequenas vitórias, evitando focar apenas no que ainda falta para atingir a perfeição.
+          </p>
+        </div>
+
+        <div class="side-section">
+          <h3>Ciclos de check-in (registro compacto)</h3>
+          <table class="checkin-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Foco</th>
+                <th>Percepção de avanço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="date" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="Tema central do check-in" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="0–100% / narrativa" style="font-size:11px;"></td>
+              </tr>
+              <tr>
+                <td><input type="date" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+              </tr>
+              <tr>
+                <td><input type="date" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="hint">
+            Sugestão de perguntas fixas: “O que mudou desde o último encontro?”,
+            “Onde você percebe avanço?”, “O que ainda te trava?”.
+          </p>
+        </div>
+
+        <div class="side-section">
+          <h3>Painel visual do PDI</h3>
+          <p style="font-size:12px; color:var(--muted);">
+            Use este bloco para ter uma leitura rápida antes da sessão:
+          </p>
+          <ul class="quick">
+            <li><strong>Estado atual:</strong> <span style="color:var(--muted);">preencher em 1 frase (como ele está hoje).</span></li>
+            <li><strong>Direção desejada:</strong> <span style="color:var(--muted);">onde este PDI quer chegar.</span></li>
+            <li><strong>Riscos a monitorar:</strong> <span style="color:var(--muted);">sofrer em silêncio, não expor ideias, focar só no que falta.</span></li>
+          </ul>
+          <div class="heatbar">
+            <div class="heatbar-fill" style="width: 0%;"></div>
+          </div>
+          <p class="hint">
+            Você pode estimar visualmente um % de avanço no PDI e ajustar a largura da barra
+            conforme a percepção geral nas sessões.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
