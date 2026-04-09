@@ -1,407 +1,426 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI da Equipe</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #F4F3EE;
-  --surface: #FFFFFF;
-  --surface2: #ECEAE3;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.13);
-  --text: #1A1917;
-  --text2: #6B6A65;
-  --text3: #A09F99;
-  --purple: #534AB7; --purple-bg: #EEEDFE; --purple-text: #3C3489;
-  --teal: #1D9E75;   --teal-bg: #E1F5EE;   --teal-text: #085041;
-  --amber: #BA7517;  --amber-bg: #FAEEDA;  --amber-text: #633806;
-  --coral: #993C1D;  --coral-bg: #FAECE7;  --coral-text: #712B13;
-  --blue: #185FA5;   --blue-bg: #E6F1FB;   --blue-text: #0C447C;
-  --radius: 14px; --radius-sm: 8px;
-  --font: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+  <meta charset="UTF-8">
+  <title>PDI da Equipe – Soul Vision Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #4b2e83;
+      --accent: #f97316;
+      --secondary: #2563eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(15,23,42,0.08);
+      --radius-lg: 18px;
+      --radius-md: 10px;
+      --radius-pill: 999px;
+    }
 
-.header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.header-logo {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: var(--purple);
-  display: flex; align-items: center; justify-content: center;
-}
-.header-logo svg { width: 18px; height: 18px; }
-.header-title { font-size: 15px; font-weight: 500; }
-.header-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); }
-.header-meta { font-size: 12px; color: var(--text3); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
 
-.hero {
-  padding: 3rem 2rem 1.5rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.hero-label {
-  font-size: 11px; font-family: var(--mono); color: var(--text3);
-  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
-}
-.hero-title {
-  font-size: 32px; font-weight: 300; line-height: 1.2; margin-bottom: 6px;
-  letter-spacing: -.02em;
-}
-.hero-title strong { font-weight: 500; }
-.hero-desc { font-size: 14px; color: var(--text2); }
+    body {
+      background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%);
+      color: var(--text);
+      padding: 32px 16px;
+      min-height: 100vh;
+    }
 
-.stats-bar {
-  max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-}
-.stat-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 14px 16px;
-}
-.stat-label { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
-.stat-val { font-size: 22px; font-weight: 500; font-family: var(--mono); }
-.stat-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    .app { max-width: 1120px; margin: 0 auto; }
 
-.grid {
-  max-width: 1100px; margin: 2rem auto;
-  padding: 0 2rem 3rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
 
-.person-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform .2s, box-shadow .2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.person-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.08);
-  border-color: var(--border2);
-}
-.card-top {
-  padding: 1.5rem 1.5rem 1rem;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.avatar {
-  width: 56px; height: 56px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 500; flex-shrink: 0;
-  font-family: var(--mono); letter-spacing: -.02em;
-}
-.person-name { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
-.person-disc { font-size: 12px; }
-.disc-tag {
-  display: inline-block; margin-top: 6px;
-  padding: 2px 10px; border-radius: 20px;
-  font-size: 11px; font-weight: 500;
-}
-.card-divider { height: 1px; background: var(--border); margin: 0 1.5rem; }
-.card-thermo {
-  padding: 1rem 1.5rem 1.5rem;
-  display: flex; align-items: center; gap: 14px;
-}
-.thermo-mini {
-  flex-shrink: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-}
-.thermo-track-mini {
-  width: 10px; border-radius: 5px;
-  background: var(--surface2); border: 1px solid var(--border2);
-  position: relative; overflow: hidden;
-}
-.thermo-fill-mini {
-  width: 100%; position: absolute; bottom: 0; left: 0;
-  border-radius: 0 0 5px 5px;
-  transition: height .5s cubic-bezier(.4,0,.2,1);
-}
-.thermo-bulb-mini {
-  width: 20px; height: 20px; border-radius: 50%;
-  border: 1.5px solid; display: flex; align-items: center;
-  justify-content: center; font-size: 10px;
-}
-.thermo-info { flex: 1; }
-.thermo-pct { font-size: 26px; font-weight: 500; font-family: var(--mono); line-height: 1; margin-bottom: 3px; }
-.thermo-stage { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
-.prog-bar-wrap { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
-.prog-bar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
-.card-metas {
-  padding: 0 1.5rem 1.25rem;
-  display: flex; flex-direction: column; gap: 5px;
-}
-.meta-row {
-  display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2);
-}
-.meta-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.card-footer {
-  padding: 10px 1.5rem;
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.next-checkin { font-size: 11px; color: var(--text3); }
-.open-btn {
-  font-size: 12px; font-weight: 500; color: var(--purple);
-  display: flex; align-items: center; gap: 4px;
-  font-family: var(--mono);
-}
-.open-btn::after { content: "\2192"; }
+    .brand { display: flex; align-items: center; gap: 14px; }
 
-.empty-state {
-  font-size: 12px; color: var(--text3); font-style: italic;
-  padding: 4px 0 8px;
-}
+    .logo {
+      width: 48px; height: 48px;
+      border-radius: 16px;
+      background: conic-gradient(from 180deg, var(--accent), var(--secondary), var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 22px;
+      box-shadow: var(--shadow);
+    }
 
-.updated-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal); display: inline-block; margin-right: 4px;
-}
-</style>
+    .brand-text h1 { font-size: 22px; font-weight: 700; }
+    .brand-text p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .tagline {
+      padding: 8px 16px;
+      background: rgba(75,46,131,0.06);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(75,46,131,0.18);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .tagline strong { color: var(--primary); }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0,2fr) minmax(0,1.4fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: rgba(255,255,255,0.96);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+
+    .panel-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title span { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 600px) { .metrics { grid-template-columns: 1fr; } }
+
+    .metric {
+      background: #f9fafb;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .metric-value { font-size: 20px; font-weight: 700; color: var(--primary); }
+    .metric-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .subtitle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .subtitle-row span { font-size: 12px; color: var(--muted); }
+
+    .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .pill strong { color: var(--primary); }
+
+    .team-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .person-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: #fff;
+      text-decoration: none;
+      color: inherit;
+      transition: all .15s ease;
+    }
+
+    .person-card:hover {
+      border-color: var(--secondary);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.1);
+      transform: translateY(-1px);
+    }
+
+    .person-left { display: flex; align-items: center; gap: 12px; }
+
+    .avatar {
+      width: 38px; height: 38px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .person-name { font-size: 14px; font-weight: 600; }
+    .person-role { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    .person-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+    }
+
+    .tag-disc { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .tag-status { background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0; }
+
+    .progress-col { min-width: 130px; max-width: 160px; }
+    .progress-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+
+    .bar {
+      width: 100%; height: 6px;
+      background: #e5e7eb;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+    }
+
+    .progress-val { font-size: 11px; color: var(--muted); text-align: right; margin-top: 3px; }
+
+    /* Painel lateral */
+    .side-section { margin-bottom: 18px; }
+    .side-section h3 { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+    .side-section p { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+    .side-list { list-style: none; padding: 0; margin-top: 6px; }
+
+    .side-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .side-list li span:first-child { color: var(--muted); }
+    .side-list li span:last-child { font-weight: 600; color: var(--primary); }
+
+    .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+    .divider { border: none; border-top: 1px dashed var(--border); margin: 16px 0; }
+  </style>
 </head>
 <body>
+<div class="app">
 
-<header class="header">
-  <div class="header-brand">
-    <div class="header-logo">
-      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".9"/>
-        <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
-        <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
-        <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".3"/>
-      </svg>
+  <header>
+    <div class="brand">
+      <div class="logo">S</div>
+      <div class="brand-text">
+        <h1>PDI da Equipe</h1>
+        <p>Plano de Desenvolvimento Individual · Soul Vision Lab</p>
+      </div>
     </div>
-    <div>
-      <div class="header-title">PDI da Equipe</div>
-      <div class="header-sub">plano de desenvolvimento individual</div>
+    <div class="tagline">
+      <strong>Acompanhamento</strong> orgânico de desenvolvimento · clique em um nome para abrir o PDI
     </div>
-  </div>
-  <div class="header-meta" id="last-updated"></div>
-</header>
+  </header>
 
-<div class="hero">
-  <div class="hero-label">Gestão de pessoas</div>
-  <div class="hero-title"><strong>Acompanhamento</strong> de<br>desenvolvimento da equipe</div>
-  <div class="hero-desc">Clique em um colaborador para abrir a ficha completa de PDI.</div>
+  <main>
+
+    <!-- Painel esquerdo -->
+    <section class="panel">
+      <div class="panel-title">
+        Colaboradores em desenvolvimento
+        <span>5 PDIs ativos</span>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Progresso médio</div>
+          <div class="metric-value">—</div>
+          <div class="metric-sub">Atualizado nos check-ins</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Check-ins realizados</div>
+          <div class="metric-value">—</div>
+          <div class="metric-sub">Registro em cada PDI</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Próximo vencimento</div>
+          <div class="metric-value">—</div>
+          <div class="metric-sub">Definido em cada plano</div>
+        </div>
+      </div>
+
+      <div class="subtitle-row">
+        <span>Equipe atual · 5 pessoas</span>
+        <div class="pill-group">
+          <div class="pill"><strong>DISC</strong> como base de leitura</div>
+          <div class="pill">Cultura horizontal · bem-estar no centro</div>
+        </div>
+      </div>
+
+      <div class="team-list">
+
+        <a class="person-card" href="PDI_Toni.html">
+          <div class="person-left">
+            <div class="avatar">T</div>
+            <div>
+              <div class="person-name">Toni</div>
+              <div class="person-role">Executor Resiliente · SDC</div>
+              <div class="person-tags">
+                <span class="tag tag-disc">SDC · Executor Resiliente</span>
+                <span class="tag tag-status">PDI ativo</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-label">Progresso estimado</div>
+            <div class="bar"><div class="bar-fill" style="width:0%"></div></div>
+            <div class="progress-val">em definição</div>
+          </div>
+        </a>
+
+        <a class="person-card" href="PDI_Raphael.html">
+          <div class="person-left">
+            <div class="avatar">R</div>
+            <div>
+              <div class="person-name">Raphael</div>
+              <div class="person-role">Estável Puro · S</div>
+              <div class="person-tags">
+                <span class="tag tag-disc">S · Estável Puro</span>
+                <span class="tag tag-status">PDI ativo</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-label">Progresso estimado</div>
+            <div class="bar"><div class="bar-fill" style="width:0%"></div></div>
+            <div class="progress-val">em definição</div>
+          </div>
+        </a>
+
+        <a class="person-card" href="PDI_Lucas.html">
+          <div class="person-left">
+            <div class="avatar">L</div>
+            <div>
+              <div class="person-name">Lucas</div>
+              <div class="person-role">Influenciador Impulsionador · ID</div>
+              <div class="person-tags">
+                <span class="tag tag-disc">ID · Influenciador Impulsionador</span>
+                <span class="tag tag-status">PDI ativo</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-label">Progresso estimado</div>
+            <div class="bar"><div class="bar-fill" style="width:0%"></div></div>
+            <div class="progress-val">em definição</div>
+          </div>
+        </a>
+
+        <a class="person-card" href="PDI_Kemilly.html">
+          <div class="person-left">
+            <div class="avatar">K</div>
+            <div>
+              <div class="person-name">Kemilly</div>
+              <div class="person-role">Estável Pura · S</div>
+              <div class="person-tags">
+                <span class="tag tag-disc">S · Estável Pura</span>
+                <span class="tag tag-status">PDI ativo</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-label">Progresso estimado</div>
+            <div class="bar"><div class="bar-fill" style="width:0%"></div></div>
+            <div class="progress-val">em definição</div>
+          </div>
+        </a>
+
+        <a class="person-card" href="PDI_Julio_1.html">
+          <div class="person-left">
+            <div class="avatar">J</div>
+            <div>
+              <div class="person-name">Julio</div>
+              <div class="person-role">Mediador Relacional · SI</div>
+              <div class="person-tags">
+                <span class="tag tag-disc">SI · Mediador Relacional</span>
+                <span class="tag tag-status">PDI ativo</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-label">Progresso estimado</div>
+            <div class="bar"><div class="bar-fill" style="width:0%"></div></div>
+            <div class="progress-val">em definição</div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Painel direito -->
+    <aside class="panel">
+
+      <div class="side-section">
+        <h3>Como usar este painel</h3>
+        <p>
+          Use este dashboard como visão rápida da equipe: quem está em qual fase do PDI,
+          qual o perfil DISC de base e qual narrativa reforçar em cada conversa.
+          Clique em qualquer nome para abrir a ficha completa.
+        </p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="side-section">
+        <h3>Perfis DISC da equipe</h3>
+        <ul class="side-list">
+          <li><span>Toni</span><span>Executor Resiliente · SDC</span></li>
+          <li><span>Raphael</span><span>Estável Puro · S</span></li>
+          <li><span>Lucas</span><span>Influenciador Impulsionador · ID</span></li>
+          <li><span>Kemilly</span><span>Estável Pura · S</span></li>
+          <li><span>Julio</span><span>Mediador Relacional · SI</span></li>
+        </ul>
+      </div>
+
+      <hr class="divider">
+
+      <div class="side-section">
+        <h3>Linhas de atenção por perfil</h3>
+        <p class="hint">
+          <strong>Toni (SDC):</strong> força tranquila, foco em integridade · risco: sofrer em silêncio e não expor ideias.<br><br>
+          <strong>Raphael / Kemilly (S):</strong> porto seguro do time · risco: evitar conflito e demorar a se posicionar.<br><br>
+          <strong>Lucas (ID):</strong> magnetismo e performance · risco: impulsividade e negligenciar detalhes técnicos.<br><br>
+          <strong>Julio (SI):</strong> mediador relacional · risco: priorizar sempre a harmonia e se colocar por último.
+        </p>
+      </div>
+
+    </aside>
+
+  </main>
 </div>
-
-<div class="stats-bar" id="stats-bar">
-  <div class="stat-card">
-    <div class="stat-label">Colaboradores</div>
-    <div class="stat-val" id="stat-total">5</div>
-    <div class="stat-sub">com PDI ativo</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-label">Progresso médio</div>
-    <div class="stat-val" id="stat-avg">—</div>
-    <div class="stat-sub">da equipe</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-label">Check-ins realizados</div>
-    <div class="stat-val" id="stat-checkins">—</div>
-    <div class="stat-sub">no total</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-label">Próximo vencimento</div>
-    <div class="stat-val" style="font-size:15px;padding-top:4px" id="stat-next">—</div>
-    <div class="stat-sub" id="stat-next-who"></div>
-  </div>
-</div>
-
-<div class="grid" id="cards-grid"></div>
-
-<script>
-const collaborators = [
-  { key:"pdi_julio",   nome:"Julio",   file:"PDI_Julio.html",   disc:"julio",   cargo:"" },
-  { key:"pdi_kemilly", nome:"Kemilly", file:"PDI_Kemilly.html", disc:"kemilly", cargo:"" },
-  { key:"pdi_lucas",   nome:"Lucas",   file:"PDI_Lucas.html",   disc:"lucas",   cargo:"" },
-  { key:"pdi_raphael", nome:"Raphael", file:"PDI_Raphael.html", disc:"raphael", cargo:"" },
-  { key:"pdi_toni",    nome:"Toni",    file:"PDI_Toni.html",    disc:"toni",    cargo:"" },
-];
-
-const discData = {
-  julio:   {label:"SI — Mediador Relacional",         color:"#1D9E75", bg:"#E1F5EE", textc:"#085041"},
-  kemilly: {label:"S — Estável Pura",                 color:"#185FA5", bg:"#E6F1FB", textc:"#0C447C"},
-  lucas:   {label:"ID — Influenciador Impulsionador", color:"#854F0B", bg:"#FAEEDA", textc:"#633806"},
-  raphael: {label:"S — Estável Puro",                 color:"#534AB7", bg:"#EEEDFE", textc:"#3C3489"},
-  toni:    {label:"SDC — Executor Resiliente",        color:"#993C1D", bg:"#FAECE7", textc:"#712B13"},
-};
-const metaCols = [
-  {c:"#534AB7"}, {c:"#1D9E75"}, {c:"#BA7517"}, {c:"#993C1D"},
-];
-const thermoStages = [
-  {min:0,  max:25, fill:"#F09595", bulbBg:"#FCEBEB", label:"Início da jornada"},
-  {min:25, max:50, fill:"#EF9F27", bulbBg:"#FAEEDA", label:"Em desenvolvimento"},
-  {min:50, max:75, fill:"#97C459", bulbBg:"#EAF3DE", label:"Ganhando ritmo"},
-  {min:75, max:101,fill:"#1D9E75", bulbBg:"#E1F5EE", label:"Alta performance"},
-];
-
-function getThermoConfig(pct) {
-  return thermoStages.find(t => pct >= t.min && pct < t.max) || thermoStages[3];
-}
-function getOverallProgress(metas) {
-  if (!metas || !metas.length) return 0;
-  return Math.round(metas.reduce((a,m) => a + (m.prog||0), 0) / metas.length);
-}
-function getInitials(n) {
-  if (!n) return "??";
-  return n.trim().split(" ").filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
-}
-function fmtDate(d) {
-  if (!d) return "—";
-  const [y,m,day] = d.split("-");
-  return `${day}/${m}/${y}`;
-}
-
-function loadPDIData(storageKey) {
-  try {
-    const raw = localStorage.getItem(storageKey);
-    if (!raw) return null;
-    return JSON.parse(raw);
-  } catch(e) { return null; }
-}
-
-function renderCard(c) {
-  const data = loadPDIData(c.key);
-  const disc = discData[c.disc];
-  const nome = (data && data.nome) || c.nome;
-  const cargo = (data && data.cargo) || c.cargo || "Cargo não preenchido";
-  const metas = (data && data.metas) || [];
-  const checkins = (data && data.checkins) || [];
-  const prazo = (data && data.prazo) || "";
-  const pct = getOverallProgress(metas);
-  const tc = getThermoConfig(pct);
-  const thermoH = 60;
-  const fillH = Math.round((pct/100) * thermoH);
-  const sym = pct>=75?"★":pct>=50?"↑":pct>=25?"~":"○";
-  const proxCheckin = checkins.filter(ci=>ci.status==="pendente"&&ci.data).sort((a,b)=>a.data.localeCompare(b.data))[0];
-  const realizados = checkins.filter(ci=>ci.status==="realizado").length;
-  const hasData = data && data.savedAt;
-
-  const metasHtml = metas.length
-    ? metas.slice(0,3).map((m,i) => `
-        <div class="meta-row">
-          <div class="meta-dot" style="background:${metaCols[i%4].c}"></div>
-          <span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${m.desc||"Meta sem descrição"}</span>
-          <span style="font-family:var(--mono);color:${metaCols[i%4].c};flex-shrink:0">${m.prog}%</span>
-        </div>`).join("")
-    : `<div class="empty-state">Nenhuma meta cadastrada ainda</div>`;
-
-  return `
-  <a class="person-card" href="${c.file}">
-    <div class="card-top">
-      <div class="avatar" style="background:${disc.bg};color:${disc.textc}">${getInitials(nome)}</div>
-      <div style="flex:1;min-width:0">
-        <div class="person-name">${nome} ${hasData?"<span style=\"display:inline-block;width:6px;height:6px;border-radius:50%;background:#1D9E75;margin-left:4px;vertical-align:middle\"></span>":""}</div>
-        <div class="person-disc" style="color:var(--text2)">${cargo}</div>
-        <span class="disc-tag" style="background:${disc.bg};color:${disc.textc}">${disc.label}</span>
-      </div>
-    </div>
-    <div class="card-divider"></div>
-    <div class="card-thermo">
-      <div class="thermo-mini">
-        <div class="thermo-track-mini" style="height:${thermoH}px">
-          <div class="thermo-fill-mini" style="height:${fillH}px;background:${tc.fill}"></div>
-        </div>
-        <div class="thermo-bulb-mini" style="background:${tc.bulbBg};border-color:${tc.fill};color:${tc.fill}">${sym}</div>
-      </div>
-      <div class="thermo-info">
-        <div class="thermo-pct" style="color:${tc.fill}">${pct}%</div>
-        <div class="thermo-stage">${tc.label}</div>
-        <div class="prog-bar-wrap">
-          <div class="prog-bar-fill" style="width:${pct}%;background:${tc.fill}"></div>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:8px;font-size:11px;color:var(--text3);font-family:var(--mono)">
-          <span>${metas.length} meta${metas.length!==1?"s":""}</span>
-          <span>${realizados}/${checkins.length} check-ins</span>
-          ${prazo?`<span>prazo: ${fmtDate(prazo)}</span>`:""}
-        </div>
-      </div>
-    </div>
-    <div class="card-divider"></div>
-    <div class="card-metas">${metasHtml}</div>
-    <div class="card-footer">
-      <div class="next-checkin">
-        ${proxCheckin
-          ? `<span style="color:var(--amber-text)">próx. check-in: ${fmtDate(proxCheckin.data)}</span>`
-          : `<span>sem check-in agendado</span>`}
-      </div>
-      <div class="open-btn">abrir ficha</div>
-    </div>
-  </a>`;
-}
-
-function renderStats() {
-  const allData = collaborators.map(c => ({c, d: loadPDIData(c.key)}));
-  const withData = allData.filter(x => x.d);
-  const progs = collaborators.map(c => {
-    const d = loadPDIData(c.key);
-    return getOverallProgress(d ? d.metas : []);
-  });
-  const avg = progs.length ? Math.round(progs.reduce((a,b)=>a+b,0)/progs.length) : 0;
-  document.getElementById("stat-avg").textContent = avg + "%";
-
-  const totalCheckins = allData.reduce((a,x) => a + (x.d && x.d.checkins ? x.d.checkins.filter(ci=>ci.status==="realizado").length : 0), 0);
-  document.getElementById("stat-checkins").textContent = totalCheckins || "—";
-
-  // next deadline
-  let nextPrazo = null, nextWho = null;
-  allData.forEach(({c,d}) => {
-    if (d && d.prazo) {
-      if (!nextPrazo || d.prazo < nextPrazo) { nextPrazo = d.prazo; nextWho = (d.nome||c.nome); }
-    }
-  });
-  if (nextPrazo) {
-    document.getElementById("stat-next").textContent = fmtDate(nextPrazo);
-    document.getElementById("stat-next-who").textContent = nextWho;
-  }
-
-  // last updated
-  const times = allData.filter(x=>x.d&&x.d.savedAt).map(x=>x.d.savedAt).sort().reverse();
-  if (times.length) {
-    const dt = new Date(times[0]);
-    document.getElementById("last-updated").innerHTML =
-      `<span class="updated-dot"></span>atualizado em ${dt.toLocaleDateString("pt-BR")}`;
-  }
-}
-
-function render() {
-  const grid = document.getElementById("cards-grid");
-  grid.innerHTML = collaborators.map(c => renderCard(c)).join("");
-  renderStats();
-}
-
-render();
-
-// refresh if returning from a PDI file
-window.addEventListener("focus", render);
-</script>
 </body>
 </html>
