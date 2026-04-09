@@ -7,9 +7,9 @@
 
   <style>
     :root {
-      --primary: #4b2e83;   /* roxo */
-      --accent: #f97316;    /* laranja */
-      --secondary: #2563eb; /* azul */
+      --primary: #4b2e83;
+      --accent: #f97316;
+      --secondary: #2563eb;
       --text: #111827;
       --muted: #6b7280;
       --border: #e5e7eb;
@@ -91,7 +91,9 @@
       gap: 18px;
     }
 
-    @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
+    @media (max-width: 820px) {
+      .layout { grid-template-columns: 1fr; }
+    }
 
     .panel {
       background: #ffffff;
@@ -222,6 +224,7 @@
     }
 
     .goal-item input[type="text"] { background: transparent; }
+
     .goal-line {
       font-size: 12px;
       color: var(--muted);
@@ -356,15 +359,16 @@
           </div>
 
           <p class="disc-note">
-            Seu perfil é marcado por uma harmonia ativa e acolhedora. Sua base é a Estabilidade (S),
-            mas sua Influência (I) secundária te permite sair do casulo para conectar pessoas
-            e pacificar o ambiente. Você é o tipo de pessoa que busca o consenso e garante que
-            todos se sintam integrados e valorizados no grupo.
-            Você é aquela pessoa que todo mundo gosta de ter por perto em momentos de estresse,
-            porque suaviza as arestas. Sua mente é voltada para o equilíbrio e sua maior dor é
-            ver alguém sendo excluído ou injustiçado. Você acredita que um ambiente feliz é um
-            ambiente produtivo, e sua maior força é a lealdade combinada com uma comunicação
-            leve e diplomática.
+            Seu perfil é marcado por uma harmonia ativa e acolhedora. Sua base é a
+            Estabilidade (S), mas sua Influência (I) secundária te permite sair do casulo
+            para conectar pessoas e pacificar o ambiente. Você é o tipo de pessoa que
+            busca o consenso e garante que todos se sintam integrados e valorizados no
+            grupo.
+            Você é aquela pessoa que todo mundo gosta de ter por perto em momentos
+            de estresse, porque você suaviza as arestas. Sua mente é voltada para o
+            equilíbrio e sua maior dor é ver alguém sendo excluído ou injustiçado. Você
+            acredita que um ambiente feliz é um ambiente produtivo, e sua maior força é
+            a lealdade combinada com uma comunicação leve e diplomática.
           </p>
         </div>
 
@@ -384,8 +388,8 @@
         <div class="section">
           <div class="section-label">Metas de desenvolvimento (até 4)</div>
           <p class="subtle">
-            Baseado no diagnóstico do relatório: separar problema x sentimento, assumir postura mais firme
-            em decisões rápidas e valorizar a própria voz técnica.
+            Baseado no diagnóstico do relatório: separar problema x sentimento,
+            assumir postura mais firme em decisões rápidas e valorizar a própria voz técnica.
           </p>
 
           <div class="goals-list">
@@ -405,7 +409,7 @@
 
             <div class="goal-item">
               <label>Meta 3</label>
-              <input type="text" placeholder="Ex.: Valorizar a própria voz, trazendo pelo menos 1 contribuição técnica em cada reunião-chave.">
+              <input type="text" placeholder="Ex.: Valorizar a própria voz, trazendo ao menos 1 contribuição técnica em cada reunião-chave.">
               <div class="goal-line">Indicador de progresso:</div>
               <input type="text" placeholder="Ex.: nº de contribuições registradas / feedback da liderança.">
             </div>
@@ -440,13 +444,25 @@
             <span class="badge">Driver central: Aceitação e harmonia</span>
           </p>
           <p class="hint">
-            Medo básico: isolamento ou quebra de laços afetivos no time.<br>
-            Motivação principal: manter relações saudáveis e clima leve. Você valoriza gentileza
-            e colaboração, se afastando de ambientes agressivos, competitivos ou que ignorem o
-            fator humano nas decisões.<br>
-            Valor para a organização: ser o mantenedor da cultura e do clima, reduzindo atritos,
-            integrando pessoas novas e garantindo que a comunicação flua com respeito e diplomacia
-            mesmo sob pressão.
+            Seu maior medo básico é o isolamento ou a quebra de laços afetivos no
+            time. Sua motivação principal é a aceitação e harmonia. Você valoriza a
+            gentileza e a colaboração, distanciando-se de ambientes agressivos,
+            competitivos ou que ignorem o fator humano nas decisões.<br><br>
+            Valor para a organização: você é o mantenedor da cultura e do clima. Sua
+            eficácia é máxima no atendimento ao cliente, suporte interno e em funções
+            de integração de novos membros. Você reduz o atrito entre as áreas,
+            garantindo que a comunicação flua sem ruídos e que o espírito de equipe
+            seja preservado mesmo sob pressão.
+          </p>
+        </div>
+
+        <div class="side-section">
+          <h3>Diagnóstico de desenvolvimento</h3>
+          <p class="hint">
+            Para não se tornar “invisível” nos resultados, você precisa:<br>
+            · Aprender a separar problemas profissionais de sentimentos pessoais;<br>
+            · Assumir uma postura mais firme em decisões que exigem rapidez, mesmo que não haja consenso total;<br>
+            · Valorizar sua própria voz, entendendo que suas ideias técnicas são tão importantes quanto sua habilidade de mediar.
           </p>
         </div>
 
@@ -468,18 +484,18 @@
               </tr>
               <tr>
                 <td><input type="date" style="font-size:11px;"></td>
-                <td><input type="text" placeholder="" style="font-size:11px;"></td>
-                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+                <td><input type="text" style="font-size:11px;"></td>
+                <td><input type="text" style="font-size:11px;"></td>
               </tr>
               <tr>
                 <td><input type="date" style="font-size:11px;"></td>
-                <td><input type="text" placeholder="" style="font-size:11px;"></td>
-                <td><input type="text" placeholder="" style="font-size:11px;"></td>
+                <td><input type="text" style="font-size:11px;"></td>
+                <td><input type="text" style="font-size:11px;"></td>
               </tr>
             </tbody>
           </table>
           <p class="hint">
-            Repare nos registros se ele está: (1) se posicionando mais, (2) aceitando decisões sem consenso total,
+            Repare se ele está: (1) se posicionando mais, (2) aceitando decisões sem consenso total,
             (3) trazendo ideias técnicas além da mediação de conflitos.
           </p>
         </div>
