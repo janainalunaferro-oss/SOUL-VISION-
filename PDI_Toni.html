@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>PDI – Toni</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <style>
     :root {
       --primary: #4b2e83;
@@ -18,441 +17,272 @@
       --radius-md: 10px;
       --radius-pill: 999px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-
-    body {
-      background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%);
-      color: var(--text);
-      padding: 24px 16px 40px;
-      min-height: 100vh;
-    }
-
+    body { background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%); color: var(--text); padding: 24px 16px 40px; min-height: 100vh; }
     .app { max-width: 900px; margin: 0 auto; }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
     .header-main { display: flex; align-items: center; gap: 12px; }
-
-    .avatar {
-      width: 44px; height: 44px; border-radius: 999px;
-      background: radial-gradient(circle at top, #bfdbfe, #4b2e83);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 700; color: #f9fafb;
-      box-shadow: var(--shadow); flex-shrink: 0;
-    }
-
+    .avatar { width: 44px; height: 44px; border-radius: 999px; background: radial-gradient(circle at top, #bfdbfe, #4b2e83); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #f9fafb; box-shadow: var(--shadow); flex-shrink: 0; }
     .headline { display: flex; flex-direction: column; gap: 2px; }
     .headline h1 { font-size: 20px; font-weight: 700; }
     .headline p { font-size: 13px; color: var(--muted); }
-
-    .back-link {
-      font-size: 12px; color: var(--primary); text-decoration: none;
-      padding: 6px 12px; border-radius: var(--radius-pill);
-      border: 1px solid rgba(75,46,131,0.3);
-      background: rgba(75,46,131,0.03); white-space: nowrap;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0,1.6fr) minmax(0,1.1fr);
-      gap: 18px;
-    }
-
+    .back-link { font-size: 12px; color: var(--primary); text-decoration: none; padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid rgba(75,46,131,0.3); background: rgba(75,46,131,0.03); white-space: nowrap; }
+    .layout { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1.1fr); gap: 18px; }
     @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
-
-    .panel {
-      background: #ffffff; border-radius: var(--radius-lg);
-      padding: 18px 18px 20px; box-shadow: var(--shadow);
-      border: 1px solid rgba(148,163,184,0.25);
-    }
-
-    .panel h2 {
-      font-size: 15px; margin-bottom: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-
+    .panel { background: #ffffff; border-radius: var(--radius-lg); padding: 18px 18px 20px; box-shadow: var(--shadow); border: 1px solid rgba(148,163,184,0.25); }
+    .panel h2 { font-size: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .panel h2 span { font-size: 11px; color: var(--muted); font-weight: 500; }
-
     .section { margin-bottom: 14px; }
     .section:last-child { margin-bottom: 0; }
-
     .section-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-
     .field-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
     .field { flex: 1 1 140px; display: flex; flex-direction: column; gap: 4px; }
-
     label { font-size: 12px; color: var(--muted); }
-
-    input[type="text"],
-    input[type="date"],
-    textarea,
-    select {
-      width: 100%; padding: 7px 9px; border-radius: 8px;
-      border: 1px solid var(--border); font-size: 13px;
-      color: var(--text); background: #f9fafb; resize: vertical;
-    }
-
+    input[type="text"], input[type="date"], textarea, select { width: 100%; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; color: var(--text); background: #f9fafb; resize: vertical; }
     textarea { min-height: 70px; }
-
-    input:focus, textarea:focus, select:focus {
-      outline: 2px solid rgba(75,46,131,0.3);
-      border-color: var(--primary); background: #ffffff;
-    }
-
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 9px; border-radius: var(--radius-pill);
-      background: #fef3c7; border: 1px solid #fcd34d;
-      font-size: 11px; color: #92400e; margin-top: 4px;
-    }
-
+    input:focus, textarea:focus, select:focus { outline: 2px solid rgba(75,46,131,0.3); border-color: var(--primary); background: #ffffff; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: var(--radius-pill); background: #fef3c7; border: 1px solid #fcd34d; font-size: 11px; color: #92400e; margin-top: 4px; }
     .pill small { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
-
-    .badge {
-      display: inline-block; padding: 3px 8px;
-      border-radius: var(--radius-pill); font-size: 11px;
-      background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0;
-    }
-
+    .badge { display: inline-block; padding: 3px 8px; border-radius: var(--radius-pill); font-size: 11px; background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0; }
     .disc-note { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
-
-    .subtle { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-    /* ── Metas ── */
-    .goals-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
-
-    .goal-item {
-      border-radius: 8px; border: 1px dashed var(--border);
-      padding: 10px; background: #f9fafb;
-      display: flex; flex-direction: column; gap: 6px;
-      position: relative;
-    }
-
-    .goal-item label { font-size: 12px; color: var(--muted); font-weight: 600; }
-
-    .goal-item textarea { min-height: 60px; background: #ffffff; }
-
+    .subtle { font-size: 11px; color: var(--muted); margin-top: 4px; margin-bottom: 8px; }
+    .goals-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .goal-item { border-radius: 8px; border: 1px dashed var(--border); padding: 10px; background: #f9fafb; display: flex; flex-direction: column; gap: 6px; position: relative; }
+    .goal-item label { font-size: 12px; font-weight: 600; color: var(--muted); }
+    .goal-item textarea { min-height: 64px; background: #ffffff; }
     .goal-line { font-size: 12px; color: var(--muted); }
-
-    .remove-goal {
-      position: absolute; top: 8px; right: 8px;
-      background: none; border: none; cursor: pointer;
-      font-size: 14px; color: var(--muted); line-height: 1;
-      padding: 2px 5px; border-radius: 4px;
-      transition: background .15s;
-    }
-
+    .remove-goal { position: absolute; top: 8px; right: 8px; background: none; border: none; cursor: pointer; font-size: 13px; color: var(--muted); padding: 2px 5px; border-radius: 4px; transition: background .15s; }
     .remove-goal:hover { background: #fee2e2; color: #dc2626; }
-
-    .btn-add-meta {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 8px; padding: 7px 14px;
-      border-radius: var(--radius-pill);
-      border: 1px dashed var(--primary);
-      background: rgba(75,46,131,0.04);
-      color: var(--primary); font-size: 13px;
-      cursor: pointer; font-weight: 500;
-      transition: background .15s;
-    }
-
-    .btn-add-meta:hover { background: rgba(75,46,131,0.1); }
-
-    /* ── Lateral ── */
+    .btn-add { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; border-radius: var(--radius-pill); border: 1px dashed var(--primary); background: rgba(75,46,131,0.04); color: var(--primary); font-size: 13px; cursor: pointer; font-weight: 500; transition: background .15s; }
+    .btn-add:hover { background: rgba(75,46,131,0.1); }
     .side-section { margin-bottom: 16px; }
     .side-section h3 { font-size: 13px; margin-bottom: 6px; color: var(--muted); font-weight: 600; }
     .side-section p { font-size: 13px; color: var(--text); line-height: 1.5; }
-
-    /* ── Check-in ── */
     .checkin-list { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
-
-    .checkin-item {
-      border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px; background: #f9fafb;
-      display: flex; flex-direction: column; gap: 6px;
-    }
-
+    .checkin-item { border: 1px solid var(--border); border-radius: 10px; padding: 10px; background: #f9fafb; display: flex; flex-direction: column; gap: 8px; }
+    .checkin-label { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
     .checkin-row { display: flex; gap: 8px; flex-wrap: wrap; }
-
-    .checkin-row .field { flex: 1 1 120px; }
-
-    .checkin-item textarea {
-      min-height: 60px; background: #ffffff;
-      font-size: 12px;
-    }
-
-    .checkin-label { font-size: 11px; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
-
-    .heatbar {
-      width: 100%; height: 6px; background: #e5e7eb;
-      border-radius: 999px; overflow: hidden; margin-top: 4px;
-    }
-
-    .heatbar-fill {
-      height: 100%; border-radius: inherit;
-      background: linear-gradient(90deg, var(--secondary), var(--accent));
-      width: 0;
-    }
-
+    .checkin-row .field { flex: 1 1 100px; }
+    .checkin-item textarea { min-height: 60px; background: #ffffff; font-size: 12px; }
+    .heatbar { width: 100%; height: 6px; background: #e5e7eb; border-radius: 999px; overflow: hidden; margin-top: 4px; }
+    .heatbar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--secondary), var(--accent)); width: 0; }
     .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
-
     ul.quick { list-style: none; padding-left: 0; margin-top: 6px; font-size: 13px; }
     ul.quick li { margin-bottom: 4px; }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="header-main">
-        <div class="avatar">T</div>
-        <div class="headline">
-          <h1>Plano de Desenvolvimento Individual – Toni</h1>
-          <p>Perfil DISC · Executor Resiliente · Trifatorial SDC</p>
+<div class="app">
+  <header>
+    <div class="header-main">
+      <div class="avatar">T</div>
+      <div class="headline">
+        <h1>Plano de Desenvolvimento Individual – Toni</h1>
+        <p>Perfil DISC · Executor Resiliente · Trifatorial SDC</p>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">← Voltar para o dashboard da equipe</a>
+  </header>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>Ficha base do PDI <span>Uso interno da consultoria</span></h2>
+
+      <div class="section">
+        <div class="section-label">Identificação</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Nome completo</label>
+            <input type="text" value="Toni">
+          </div>
+          <div class="field">
+            <label>Cargo</label>
+            <input type="text" placeholder="Preencher na conversa">
+          </div>
         </div>
       </div>
-      <a class="back-link" href="index.html">← Voltar para o dashboard da equipe</a>
-    </header>
 
-    <div class="layout">
-      <!-- Coluna principal -->
-      <section class="panel">
-        <h2>Ficha base do PDI <span>Uso interno da consultoria</span></h2>
-
-        <!-- Identificação -->
-        <div class="section">
-          <div class="section-label">Identificação</div>
-          <div class="field-row">
-            <div class="field">
-              <label>Nome completo</label>
-              <input type="text" value="Toni">
-            </div>
-            <div class="field">
-              <label>Cargo</label>
-              <input type="text" placeholder="Preencher na conversa">
-            </div>
+      <div class="section">
+        <div class="section-label">Perfil DISC</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Perfil</label>
+            <select>
+              <option selected>Toni — SDC (Executor Resiliente)</option>
+              <option>Raphael — S (Estável Puro)</option>
+              <option>Lucas — ID (Influenciador Impulsionador)</option>
+              <option>Kemilly — S (Estável Pura)</option>
+              <option>Julio — SI (Mediador Relacional)</option>
+            </select>
+            <div class="pill"><small>Trifatorial SDC</small> Executor Resiliente</div>
+          </div>
+          <div class="field">
+            <label>Data da conversa inicial</label>
+            <input type="date">
+            <label style="margin-top:6px;">Prazo final do PDI</label>
+            <input type="date">
           </div>
         </div>
+        <p class="disc-note">
+          Seu perfil revela uma força tranquila e imparável. Sua base é a Estabilidade, o que lhe confere uma paciência fora do comum para lidar com processos longos e repetitivos. No entanto, sua Dominância mantém o foco no alvo e sua Conformidade evita que o projeto saia dos trilhos por descuido técnico. Você é aquela pessoa que transmite calma absoluta ao time em meio ao pânico, mas que internamente não descansa até que a meta seja batida com perfeição. Sua mente trabalha em silêncio e sua maior irritação são pessoas que buscam atalhos éticos ou que desestruturam o ambiente com barulho e pouca entrega real. Você é o trator silencioso da empresa.
+        </p>
+      </div>
 
-        <!-- Perfil DISC -->
-        <div class="section">
-          <div class="section-label">Perfil DISC</div>
-          <div class="field-row">
-            <div class="field">
-              <label>Perfil</label>
-              <select>
-                <option selected>Toni — SDC (Executor Resiliente)</option>
-                <option>Raphael — S (Estável Puro)</option>
-                <option>Lucas — ID (Influenciador Impulsionador)</option>
-                <option>Kemilly — S (Estável Pura)</option>
-                <option>Julio — SI (Mediador Relacional)</option>
-              </select>
-              <div class="pill"><small>Trifatorial SDC</small> Executor Resiliente</div>
-            </div>
-            <div class="field">
-              <label>Data da conversa inicial</label>
-              <input type="date">
-              <label style="margin-top:6px;">Prazo final do PDI</label>
-              <input type="date">
-            </div>
+      <div class="section">
+        <div class="section-label">Forças identificadas na conversa</div>
+        <textarea placeholder="Liste as forças comportamentais e técnicas que emergiram da conversa (3–5 pontos)."></textarea>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Aspiração de curto prazo (2–3 meses)</div>
+        <textarea placeholder="Descreva, com as palavras dele, o que deseja construir profissionalmente neste ciclo."></textarea>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Metas de desenvolvimento</div>
+        <p class="subtle">Baseado no diagnóstico: separar problema x sentimento, expor ideias de melhoria e celebrar pequenas vitórias.</p>
+        <div class="goals-list" id="goals-toni">
+          <div class="goal-item">
+            <label>Meta 1</label>
+            <textarea placeholder="Ex.: Expor ideias de melhoria de processo ao menos 1x por semana nas reuniões."></textarea>
+            <div class="goal-line">Indicador de progresso:</div>
+            <textarea placeholder="Ex.: nº de sugestões levadas / feedback da liderança." style="min-height:48px;"></textarea>
           </div>
-
-          <p class="disc-note">
-            Seu perfil revela uma força tranquila e imparável. Sua base é a Estabilidade,
-            o que lhe confere uma paciência fora do comum para lidar com processos longos
-            e repetitivos. No entanto, sua Dominância mantém o foco no alvo e sua
-            Conformidade evita que o projeto saia dos trilhos por descuido técnico.
-            Você é aquela pessoa que transmite calma absoluta ao time em meio ao pânico,
-            mas que internamente não descansa até que a meta seja batida com perfeição.
-            Sua mente trabalha em silêncio e sua maior irritação são pessoas que buscam
-            atalhos éticos ou que desestruturam o ambiente com barulho e pouca entrega real.
-            Você é o trator silencioso da empresa.
-          </p>
-        </div>
-
-        <!-- Forças -->
-        <div class="section">
-          <div class="section-label">Forças identificadas na conversa</div>
-          <textarea placeholder="Liste as forças comportamentais e técnicas que emergiram da conversa (3–5 pontos)."></textarea>
-        </div>
-
-        <!-- Aspiração -->
-        <div class="section">
-          <div class="section-label">Aspiração de curto prazo (2–3 meses)</div>
-          <textarea placeholder="Descreva, com as palavras dele, o que deseja construir profissionalmente neste ciclo."></textarea>
-        </div>
-
-        <!-- Metas -->
-        <div class="section">
-          <div class="section-label">Metas de desenvolvimento</div>
-          <p class="subtle">
-            Baseado no diagnóstico: separar problema x sentimento, expor ideias de melhoria e celebrar pequenas vitórias.
-          </p>
-
-          <div class="goals-list" id="goals-toni">
-            <div class="goal-item">
-              <label>Meta 1</label>
-              <textarea placeholder="Ex.: Expor ideias de melhoria de processo ao menos 1x por semana nas reuniões."></textarea>
-              <div class="goal-line">Indicador de progresso:</div>
-              <textarea placeholder="Ex.: nº de sugestões levadas / feedback da liderança." style="min-height:48px;"></textarea>
-            </div>
-
-            <div class="goal-item">
-              <label>Meta 2</label>
-              <textarea placeholder="Ex.: Separar problema profissional de sentimento pessoal em situações de pressão."></textarea>
-              <div class="goal-line">Indicador de progresso:</div>
-              <textarea placeholder="Ex.: nº de situações em que conseguiu se posicionar sem levar para o pessoal." style="min-height:48px;"></textarea>
-            </div>
-
-            <div class="goal-item">
-              <label>Meta 3</label>
-              <textarea placeholder="Ex.: Criar um ritual simples de celebrar pequenas vitórias semanais."></textarea>
-              <div class="goal-line">Indicador de progresso:</div>
-              <textarea placeholder="Ex.: registros de celebração / percepção de energia ao fim da semana." style="min-height:48px;"></textarea>
-            </div>
+          <div class="goal-item">
+            <label>Meta 2</label>
+            <textarea placeholder="Ex.: Separar problema profissional de sentimento pessoal em situações de pressão."></textarea>
+            <div class="goal-line">Indicador de progresso:</div>
+            <textarea placeholder="Ex.: nº de situações em que conseguiu se posicionar sem levar para o pessoal." style="min-height:48px;"></textarea>
           </div>
-
-          <button class="btn-add-meta" onclick="addMeta('goals-toni')">+ Adicionar meta</button>
+          <div class="goal-item">
+            <label>Meta 3</label>
+            <textarea placeholder="Ex.: Criar um ritual simples de celebrar pequenas vitórias semanais."></textarea>
+            <div class="goal-line">Indicador de progresso:</div>
+            <textarea placeholder="Ex.: registros de celebração / percepção de energia ao fim da semana." style="min-height:48px;"></textarea>
+          </div>
         </div>
+        <button class="btn-add" onclick="addMeta('goals-toni')">+ Adicionar meta</button>
+      </div>
 
-        <!-- Comprometimento -->
-        <div class="section">
-          <div class="section-label">Comprometimento assumido</div>
-          <textarea placeholder="Registre em 3–4 linhas o que foi combinado como responsabilidade dele no PDI."></textarea>
-        </div>
+      <div class="section">
+        <div class="section-label">Comprometimento assumido</div>
+        <textarea placeholder="Registre em 3–4 linhas o que foi combinado como responsabilidade dele no PDI."></textarea>
+      </div>
 
-        <!-- Observações -->
-        <div class="section">
-          <div class="section-label">Observações da consultora</div>
-          <textarea placeholder="Anotações só suas (triggers, limites, cuidado com carga, contexto pessoal, etc.)."></textarea>
-        </div>
-      </section>
+      <div class="section">
+        <div class="section-label">Observações da consultora</div>
+        <textarea placeholder="Anotações só suas (triggers, limites, cuidado com carga, contexto pessoal, etc.)."></textarea>
+      </div>
+    </section>
 
-      <!-- Coluna lateral -->
-      <aside class="panel">
-        <div class="side-section">
-          <h3>Resumo comportamental (DISC)</h3>
-          <p><span class="badge">Driver central: Estabilidade + Integridade do sistema</span></p>
-          <p class="hint">
-            Medo básico: instabilidade estratégica ou trair a confiança de quem depende dele.<br>
-            Motivação principal: integridade do sistema, honestidade e perseverança — fazer o certo mesmo quando ninguém está olhando.<br><br>
-            Valor para a organização: confiança operacional máxima em contas estratégicas e projetos de longo prazo, com execução constante e rigorosa.
-          </p>
-        </div>
+    <aside class="panel">
+      <div class="side-section">
+        <h3>Resumo comportamental (DISC)</h3>
+        <p><span class="badge">Driver central: Estabilidade + Integridade do sistema</span></p>
+        <p class="hint">
+          Medo básico: instabilidade estratégica ou trair a confiança de quem depende dele.<br>
+          Motivação principal: integridade do sistema, honestidade e perseverança — fazer o certo mesmo quando ninguém está olhando.<br><br>
+          Valor para a organização: confiança operacional máxima em contas estratégicas e projetos de longo prazo, com execução constante e rigorosa.
+        </p>
+      </div>
 
-        <div class="side-section">
-          <h3>Diagnóstico de desenvolvimento</h3>
-          <p class="hint">
-            · Separar problemas profissionais de sentimentos pessoais para não sofrer em silêncio.<br>
-            · Expor suas ideias de melhoria de processo, não esperando que alguém pergunte para você falar.<br>
-            · Celebrar as pequenas vitórias, evitando focar apenas no que ainda falta para atingir a perfeição.
-          </p>
-        </div>
+      <div class="side-section">
+        <h3>Diagnóstico de desenvolvimento</h3>
+        <p class="hint">
+          · Separar problemas profissionais de sentimentos pessoais para não sofrer em silêncio.<br>
+          · Expor suas ideias de melhoria de processo, não esperando que alguém pergunte para você falar.<br>
+          · Celebrar as pequenas vitórias, evitando focar apenas no que ainda falta para atingir a perfeição.
+        </p>
+      </div>
 
-        <!-- Check-ins -->
-        <div class="side-section">
-          <h3>Ciclos de check-in</h3>
-
-          <div class="checkin-list" id="checkins-toni">
-            <div class="checkin-item">
-              <div class="checkin-label">Check-in 1</div>
-              <div class="checkin-row">
-                <div class="field">
-                  <label>Data</label>
-                  <input type="date" style="font-size:11px;">
-                </div>
-                <div class="field">
-                  <label>Foco / tema</label>
-                  <input type="text" placeholder="Tema central" style="font-size:11px;">
-                </div>
-                <div class="field">
-                  <label>Avanço percebido</label>
-                  <input type="text" placeholder="0–100% ou narrativa" style="font-size:11px;">
-                </div>
+      <div class="side-section">
+        <h3>Ciclos de check-in</h3>
+        <div class="checkin-list" id="checkins-toni">
+          <div class="checkin-item">
+            <div class="checkin-label">Check-in 1</div>
+            <div class="checkin-row">
+              <div class="field">
+                <label>Data</label>
+                <input type="date" style="font-size:11px;">
               </div>
-              <label>Observações</label>
-              <textarea placeholder="Registre pontos-chave da conversa, reações, próximas ações combinadas..."></textarea>
+              <div class="field">
+                <label>Foco / tema</label>
+                <input type="text" placeholder="Tema central" style="font-size:11px;">
+              </div>
+              <div class="field">
+                <label>Avanço percebido</label>
+                <input type="text" placeholder="0–100%" style="font-size:11px;">
+              </div>
             </div>
+            <label>Observações</label>
+            <textarea placeholder="Registre pontos-chave da conversa, reações e próximas ações combinadas..."></textarea>
           </div>
-
-          <button class="btn-add-meta" style="margin-top:10px;" onclick="addCheckin('checkins-toni')">+ Novo ciclo de check-in</button>
-
-          <p class="hint">
-            Perguntas fixas: "O que mudou?", "Onde percebe avanço?", "O que ainda te trava?".
-          </p>
         </div>
+        <button class="btn-add" onclick="addCheckin('checkins-toni')">+ Novo ciclo de check-in</button>
+        <p class="hint">Perguntas fixas: "O que mudou?", "Onde percebe avanço?", "O que ainda te trava?".</p>
+      </div>
 
-        <!-- Painel visual -->
-        <div class="side-section">
-          <h3>Painel visual do PDI</h3>
-          <ul class="quick">
-            <li><strong>Estado atual:</strong> <span style="color:var(--muted);">preencher em 1 frase.</span></li>
-            <li><strong>Direção desejada:</strong> <span style="color:var(--muted);">onde este PDI quer chegar.</span></li>
-            <li><strong>Riscos:</strong> <span style="color:var(--muted);">sofrer em silêncio, não expor ideias, focar só no que falta.</span></li>
-          </ul>
-          <div class="heatbar">
-            <div class="heatbar-fill" style="width: 0%;"></div>
-          </div>
-          <p class="hint">Ajuste o % manualmente conforme o avanço percebido nas sessões.</p>
-        </div>
-      </aside>
-    </div>
+      <div class="side-section">
+        <h3>Painel visual do PDI</h3>
+        <ul class="quick">
+          <li><strong>Estado atual:</strong> <span style="color:var(--muted);">preencher em 1 frase.</span></li>
+          <li><strong>Direção desejada:</strong> <span style="color:var(--muted);">onde este PDI quer chegar.</span></li>
+          <li><strong>Riscos:</strong> <span style="color:var(--muted);">sofrer em silêncio, não expor ideias, focar só no que falta.</span></li>
+        </ul>
+        <div class="heatbar"><div class="heatbar-fill" style="width:0%"></div></div>
+        <p class="hint">Ajuste o % manualmente conforme o avanço percebido nas sessões.</p>
+      </div>
+    </aside>
   </div>
+</div>
 
-  <script>
-    let metaCount = { 'goals-toni': 3 };
-    let checkinCount = { 'checkins-toni': 1 };
+<script>
+  let metaCount = { 'goals-toni': 3 };
+  let checkinCount = { 'checkins-toni': 1 };
 
-    function addMeta(listId) {
-      metaCount[listId] = (metaCount[listId] || 0) + 1;
-      const n = metaCount[listId];
-      const list = document.getElementById(listId);
-      const div = document.createElement('div');
-      div.className = 'goal-item';
-      div.innerHTML = `
-        <button class="remove-goal" onclick="this.parentElement.remove()" title="Remover meta">✕</button>
-        <label>Meta ${n}</label>
-        <textarea placeholder="Descreva a meta de desenvolvimento..."></textarea>
-        <div class="goal-line">Indicador de progresso:</div>
-        <textarea placeholder="Como vamos medir o avanço desta meta?" style="min-height:48px;"></textarea>
-      `;
-      list.appendChild(div);
-    }
+  function addMeta(listId) {
+    metaCount[listId] = (metaCount[listId] || 0) + 1;
+    const n = metaCount[listId];
+    const list = document.getElementById(listId);
+    const div = document.createElement('div');
+    div.className = 'goal-item';
+    div.innerHTML = `
+      <button class="remove-goal" onclick="this.parentElement.remove()" title="Remover">✕</button>
+      <label>Meta ${n}</label>
+      <textarea placeholder="Descreva a meta de desenvolvimento..."></textarea>
+      <div class="goal-line">Indicador de progresso:</div>
+      <textarea placeholder="Como vamos medir o avanço desta meta?" style="min-height:48px;"></textarea>
+    `;
+    list.appendChild(div);
+  }
 
-    function addCheckin(listId) {
-      checkinCount[listId] = (checkinCount[listId] || 0) + 1;
-      const n = checkinCount[listId];
-      const list = document.getElementById(listId);
-      const div = document.createElement('div');
-      div.className = 'checkin-item';
-      div.innerHTML = `
-        <div class="checkin-label">Check-in ${n}</div>
-        <div class="checkin-row">
-          <div class="field">
-            <label>Data</label>
-            <input type="date" style="font-size:11px;">
-          </div>
-          <div class="field">
-            <label>Foco / tema</label>
-            <input type="text" placeholder="Tema central" style="font-size:11px;">
-          </div>
-          <div class="field">
-            <label>Avanço percebido</label>
-            <input type="text" placeholder="0–100% ou narrativa" style="font-size:11px;">
-          </div>
+  function addCheckin(listId) {
+    checkinCount[listId] = (checkinCount[listId] || 0) + 1;
+    const n = checkinCount[listId];
+    const list = document.getElementById(listId);
+    const div = document.createElement('div');
+    div.className = 'checkin-item';
+    div.innerHTML = `
+      <div class="checkin-label">Check-in ${n}</div>
+      <div class="checkin-row">
+        <div class="field">
+          <label>Data</label>
+          <input type="date" style="font-size:11px;">
         </div>
-        <label>Observações</label>
-        <textarea placeholder="Registre pontos-chave da conversa, reações, próximas ações combinadas..."></textarea>
-      `;
-      list.appendChild(div);
-    }
-  </script>
+        <div class="field">
+          <label>Foco / tema</label>
+          <input type="text" placeholder="Tema central" style="font-size:11px;">
+        </div>
+        <div class="field">
+          <label>Avanço percebido</label>
+          <input type="text" placeholder="0–100%" style="font-size:11px;">
+        </div>
+      </div>
+      <label>Observações</label>
+      <textarea placeholder="Registre pontos-chave da conversa, reações e próximas ações combinadas..."></textarea>
+    `;
+    list.appendChild(div);
+  }
+</script>
 </body>
 </html>
