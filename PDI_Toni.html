@@ -19,78 +19,61 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
     body {
-      background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%);
-      color: var(--text);
-      padding: 24px 16px 40px;
-      min-height: 100vh;
-    }
-    .app { max-width: 900px; margin: 0 auto; }
-    header {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .header-main { display: flex; align-items: center; gap: 12px; }
-    .avatar {
-      width: 44px; height: 44px; border-radius: 999px;
-      background: radial-gradient(circle at top, #bfdbfe, #4b2e83);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 700; color: #f9fafb;
-      box-shadow: var(--shadow); flex-shrink: 0;
-    }
-    .headline { display: flex; flex-direction: column; gap: 2px; }
-    .headline h1 { font-size: 20px; font-weight: 700; }
-    .headline p { font-size: 13px; color: var(--muted); }
-    .back-link {
-      font-size: 12px; color: var(--primary); text-decoration: none;
-      padding: 6px 12px; border-radius: var(--radius-pill);
-      border: 1px solid rgba(75,46,131,0.3);
-      background: rgba(75,46,131,0.03); white-space: nowrap;
-    }
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0,1.6fr) minmax(0,1.1fr);
-      gap: 18px;
-    }
-    @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
-    .panel {
-      background: #ffffff; border-radius: var(--radius-lg);
-      padding: 18px 18px 20px; box-shadow: var(--shadow);
-      border: 1px solid rgba(148,163,184,0.25);
-    }
-    .panel h2 {
-      font-size: 15px; margin-bottom: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .panel h2 span { font-size: 11px; color: var(--muted); font-weight: 500; }
-    .section { margin-bottom: 14px; }
-    .section:last-child { margin-bottom: 0; }
-    .section-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-    .field-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .field { flex: 1 1 140px; display: flex; flex-direction: column; gap: 4px; }
-    label { font-size: 12px; color: var(--muted); }
-    input[type="text"], input[type="date"], textarea, select {
-      width: 100%; padding: 7px 9px; border-radius: 8px;
-      border: 1px solid var(--border); font-size: 13px;
-      color: var(--text); background: #f9fafb; resize: vertical;
-    }
-    textarea { min-height: 60px; }
-    input:focus, textarea:focus, select:focus {
-      outline: 2px solid rgba(75,46,131,0.3);
-      border-color: var(--primary); background: #ffffff;
-    }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 9px; border-radius: var(--radius-pill);
-      background: #fef3c7; border: 1px solid #fcd34d;
-      font-size: 11px; color: #92400e; margin-top: 4px;
-    }
-    .pill small { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
-    .badge {
-      display: inline-block; padding: 3px 8px;
-      border-radius: var(--radius-pill); font-size: 11px;
-      background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0;
-    }
-    .disc-note { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
-    .subtle { font-size: 11px; color: var(--muted); margin-top: 4px; }
-    .goals-list { display: flex; flex-direction
+     <script>
+  (function () {
+    const STORAGE_KEY = 'PDI_TONI_V1';
 
+    function saveForm() {
+      const data = {};
+      document.querySelectorAll('input, textarea, select').forEach(el => {
+        if (!el.name && !el.id) return;
+        const key = el.name || el.id;
+        data[key] = el.value;
+      });
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.warn('Não foi possível salvar no navegador:', e);
+      }
+    }
+
+    function loadForm() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(STORAGE_KEY);
+      } catch (e) {
+        console.warn('Não foi possível ler do navegador:', e);
+      }
+      if (!raw) return;
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        return;
+      }
+      document.querySelectorAll('input, textarea, select').forEach(el => {
+        if (!el.name && !el.id) return;
+        const key = el.name || el.id;
+        if (data[key] !== undefined) {
+          el.value = data[key];
+        }
+      });
+    }
+
+    function init() {
+      // Dá IDs ou names simples aos campos, se ainda não tiverem
+      let idx = 0;
+      document.querySelectorAll('input, textarea, select').forEach(el => {
+        if (!el.name && !el.id) {
+          el.id = 'field_' + (++idx);
+        }
+        el.addEventListener('input', saveForm);
+        el.addEventListener('change', saveForm);
+      });
+
+      loadForm();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>
