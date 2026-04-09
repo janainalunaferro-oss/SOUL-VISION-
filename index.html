@@ -17,222 +17,95 @@
       --radius-md: 10px;
       --radius-pill: 999px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-
     body {
       background: radial-gradient(circle at top, #e0f2fe 0%, #f6f5ff 45%, #fdfdfd 100%);
-      color: var(--text);
-      padding: 32px 16px;
-      min-height: 100vh;
+      color: var(--text); padding: 32px 16px; min-height: 100vh;
     }
-
     .app { max-width: 1120px; margin: 0 auto; }
-
     header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 28px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 16px; margin-bottom: 28px;
     }
-
     .brand { display: flex; align-items: center; gap: 14px; }
-
     .logo {
-      width: 48px; height: 48px;
-      border-radius: 16px;
+      width: 48px; height: 48px; border-radius: 16px;
       background: conic-gradient(from 180deg, var(--accent), var(--secondary), var(--primary), var(--accent));
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 800; font-size: 22px;
-      box-shadow: var(--shadow);
+      color: #fff; font-weight: 800; font-size: 22px; box-shadow: var(--shadow);
     }
-
     .brand-text h1 { font-size: 22px; font-weight: 700; }
     .brand-text p { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
     .tagline {
       padding: 8px 16px;
       background: rgba(75,46,131,0.06);
       border-radius: var(--radius-pill);
       border: 1px solid rgba(75,46,131,0.18);
-      font-size: 13px;
-      color: var(--muted);
+      font-size: 13px; color: var(--muted);
     }
-
     .tagline strong { color: var(--primary); }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0,2fr) minmax(0,1.4fr);
-      gap: 20px;
-    }
-
+    main { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1.4fr); gap: 20px; }
     @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
-
     .panel {
-      background: rgba(255,255,255,0.96);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.96); border-radius: var(--radius-lg);
+      padding: 22px; box-shadow: var(--shadow);
       border: 1px solid rgba(148,163,184,0.25);
     }
-
     .panel-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-size: 15px; font-weight: 600; margin-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
     .panel-title span { font-size: 12px; color: var(--muted); font-weight: 400; }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
+    .metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 22px; }
     @media (max-width: 600px) { .metrics { grid-template-columns: 1fr; } }
-
-    .metric {
-      background: #f9fafb;
-      border-radius: var(--radius-md);
-      padding: 14px;
-      border: 1px solid var(--border);
-    }
-
-    .metric-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
+    .metric { background: #f9fafb; border-radius: var(--radius-md); padding: 14px; border: 1px solid var(--border); }
+    .metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; }
     .metric-value { font-size: 20px; font-weight: 700; color: var(--primary); }
     .metric-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-    .subtitle-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
+    .subtitle-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
     .subtitle-row span { font-size: 12px; color: var(--muted); }
-
     .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
-
-    .pill {
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--muted);
-      background: #fff;
-    }
-
+    .pill { padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border); font-size: 11px; color: var(--muted); background: #fff; }
     .pill strong { color: var(--primary); }
-
     .team-list { display: flex; flex-direction: column; gap: 10px; }
-
     .person-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: #fff;
-      text-decoration: none;
-      color: inherit;
-      transition: all .15s ease;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 14px; border-radius: var(--radius-md);
+      border: 1px solid var(--border); background: #fff;
+      text-decoration: none; color: inherit; transition: all .15s ease;
     }
-
-    .person-card:hover {
-      border-color: var(--secondary);
-      box-shadow: 0 6px 18px rgba(15,23,42,0.1);
-      transform: translateY(-1px);
-    }
-
+    .person-card:hover { border-color: var(--secondary); box-shadow: 0 6px 18px rgba(15,23,42,0.1); transform: translateY(-1px); }
     .person-left { display: flex; align-items: center; gap: 12px; }
-
     .avatar {
-      width: 38px; height: 38px;
-      border-radius: 999px;
+      width: 38px; height: 38px; border-radius: 999px;
       background: linear-gradient(135deg, var(--secondary), var(--primary));
       display: flex; align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 700; color: #fff;
-      flex-shrink: 0;
+      font-size: 16px; font-weight: 700; color: #fff; flex-shrink: 0;
     }
-
     .person-name { font-size: 14px; font-weight: 600; }
     .person-role { font-size: 12px; color: var(--muted); margin-top: 1px; }
-
     .person-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
-
-    .tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: var(--radius-pill);
-      font-weight: 500;
-    }
-
+    .tag { font-size: 11px; padding: 3px 8px; border-radius: var(--radius-pill); font-weight: 500; }
     .tag-disc { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
     .tag-status { background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0; }
-
     .progress-col { min-width: 130px; max-width: 160px; }
     .progress-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
-
-    .bar {
-      width: 100%; height: 6px;
-      background: #e5e7eb;
-      border-radius: var(--radius-pill);
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--secondary), var(--accent));
-    }
-
+    .bar { width: 100%; height: 6px; background: #e5e7eb; border-radius: var(--radius-pill); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--secondary), var(--accent)); }
     .progress-val { font-size: 11px; color: var(--muted); text-align: right; margin-top: 3px; }
-
-    /* Painel lateral */
     .side-section { margin-bottom: 18px; }
     .side-section h3 { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
     .side-section p { font-size: 13px; color: var(--text); line-height: 1.55; }
-
     .side-list { list-style: none; padding: 0; margin-top: 6px; }
-
-    .side-list li {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      padding: 6px 0;
-      border-bottom: 1px dashed #e5e7eb;
-    }
-
+    .side-list li { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e5e7eb; }
     .side-list li span:first-child { color: var(--muted); }
     .side-list li span:last-child { font-weight: 600; color: var(--primary); }
-
     .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
-
     .divider { border: none; border-top: 1px dashed var(--border); margin: 16px 0; }
   </style>
 </head>
 <body>
 <div class="app">
-
   <header>
     <div class="brand">
       <div class="logo">S</div>
@@ -241,20 +114,11 @@
         <p>Plano de Desenvolvimento Individual · Soul Vision Lab</p>
       </div>
     </div>
-    <div class="tagline">
-      <strong>Acompanhamento</strong> orgânico de desenvolvimento · clique em um nome para abrir o PDI
-    </div>
+    <div class="tagline"><strong>Acompanhamento</strong> orgânico de desenvolvimento · clique em um nome para abrir o PDI</div>
   </header>
-
   <main>
-
-    <!-- Painel esquerdo -->
     <section class="panel">
-      <div class="panel-title">
-        Colaboradores em desenvolvimento
-        <span>5 PDIs ativos</span>
-      </div>
-
+      <div class="panel-title">Colaboradores em desenvolvimento <span>5 PDIs ativos</span></div>
       <div class="metrics">
         <div class="metric">
           <div class="metric-label">Progresso médio</div>
@@ -272,7 +136,6 @@
           <div class="metric-sub">Definido em cada plano</div>
         </div>
       </div>
-
       <div class="subtitle-row">
         <span>Equipe atual · 5 pessoas</span>
         <div class="pill-group">
@@ -280,9 +143,7 @@
           <div class="pill">Cultura horizontal · bem-estar no centro</div>
         </div>
       </div>
-
       <div class="team-list">
-
         <a class="person-card" href="PDI_Toni.html">
           <div class="person-left">
             <div class="avatar">T</div>
@@ -301,7 +162,6 @@
             <div class="progress-val">em definição</div>
           </div>
         </a>
-
         <a class="person-card" href="PDI_Raphael.html">
           <div class="person-left">
             <div class="avatar">R</div>
@@ -320,7 +180,6 @@
             <div class="progress-val">em definição</div>
           </div>
         </a>
-
         <a class="person-card" href="PDI_Lucas.html">
           <div class="person-left">
             <div class="avatar">L</div>
@@ -339,7 +198,6 @@
             <div class="progress-val">em definição</div>
           </div>
         </a>
-
         <a class="person-card" href="PDI_Kemilly.html">
           <div class="person-left">
             <div class="avatar">K</div>
@@ -358,7 +216,6 @@
             <div class="progress-val">em definição</div>
           </div>
         </a>
-
         <a class="person-card" href="PDI_Julio_1.html">
           <div class="person-left">
             <div class="avatar">J</div>
@@ -377,24 +234,14 @@
             <div class="progress-val">em definição</div>
           </div>
         </a>
-
       </div>
     </section>
-
-    <!-- Painel direito -->
     <aside class="panel">
-
       <div class="side-section">
         <h3>Como usar este painel</h3>
-        <p>
-          Use este dashboard como visão rápida da equipe: quem está em qual fase do PDI,
-          qual o perfil DISC de base e qual narrativa reforçar em cada conversa.
-          Clique em qualquer nome para abrir a ficha completa.
-        </p>
+        <p>Use este dashboard como visão rápida da equipe: quem está em qual fase do PDI, qual o perfil DISC de base e qual narrativa reforçar em cada conversa. Clique em qualquer nome para abrir a ficha completa.</p>
       </div>
-
       <hr class="divider">
-
       <div class="side-section">
         <h3>Perfis DISC da equipe</h3>
         <ul class="side-list">
@@ -405,9 +252,7 @@
           <li><span>Julio</span><span>Mediador Relacional · SI</span></li>
         </ul>
       </div>
-
       <hr class="divider">
-
       <div class="side-section">
         <h3>Linhas de atenção por perfil</h3>
         <p class="hint">
@@ -417,9 +262,7 @@
           <strong>Julio (SI):</strong> mediador relacional · risco: priorizar sempre a harmonia e se colocar por último.
         </p>
       </div>
-
     </aside>
-
   </main>
 </div>
 </body>
