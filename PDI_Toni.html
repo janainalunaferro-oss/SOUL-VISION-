@@ -227,5 +227,232 @@
         <h2>Ficha base do PDI <span>Uso interno da consultoria</span></h2>
 
         <!-- Identificação -->
-        <div class="
+        <div class="section">
+          <div class="section-label">Identificação</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Nome completo</label>
+              <input type="text" value="Toni">
+            </div>
+            <div class="field">
+              <label>Cargo</label>
+              <input type="text" placeholder="Preencher na conversa">
+            </div>
+          </div>
+        </div>
 
+        <!-- Perfil DISC -->
+        <div class="section">
+          <div class="section-label">Perfil DISC</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Perfil</label>
+              <select>
+                <option selected>Toni — SDC (Executor Resiliente)</option>
+                <option>Raphael — S (Estável Puro)</option>
+                <option>Lucas — ID (Influenciador Impulsionador)</option>
+                <option>Kemilly — S (Estável Pura)</option>
+                <option>Julio — SI (Mediador Relacional)</option>
+              </select>
+              <div class="pill"><small>Trifatorial SDC</small> Executor Resiliente</div>
+            </div>
+            <div class="field">
+              <label>Data da conversa inicial</label>
+              <input type="date">
+              <label style="margin-top:6px;">Prazo final do PDI</label>
+              <input type="date">
+            </div>
+          </div>
+
+          <p class="disc-note">
+            Seu perfil revela uma força tranquila e imparável. Sua base é a Estabilidade,
+            o que lhe confere uma paciência fora do comum para lidar com processos longos
+            e repetitivos. No entanto, sua Dominância mantém o foco no alvo e sua
+            Conformidade evita que o projeto saia dos trilhos por descuido técnico.
+            Você é aquela pessoa que transmite calma absoluta ao time em meio ao pânico,
+            mas que internamente não descansa até que a meta seja batida com perfeição.
+            Sua mente trabalha em silêncio e sua maior irritação são pessoas que buscam
+            atalhos éticos ou que desestruturam o ambiente com barulho e pouca entrega real.
+            Você é o trator silencioso da empresa.
+          </p>
+        </div>
+
+        <!-- Forças -->
+        <div class="section">
+          <div class="section-label">Forças identificadas na conversa</div>
+          <textarea placeholder="Liste as forças comportamentais e técnicas que emergiram da conversa (3–5 pontos)."></textarea>
+        </div>
+
+        <!-- Aspiração -->
+        <div class="section">
+          <div class="section-label">Aspiração de curto prazo (2–3 meses)</div>
+          <textarea placeholder="Descreva, com as palavras dele, o que deseja construir profissionalmente neste ciclo."></textarea>
+        </div>
+
+        <!-- Metas -->
+        <div class="section">
+          <div class="section-label">Metas de desenvolvimento</div>
+          <p class="subtle">
+            Baseado no diagnóstico: separar problema x sentimento, expor ideias de melhoria e celebrar pequenas vitórias.
+          </p>
+
+          <div class="goals-list" id="goals-toni">
+            <div class="goal-item">
+              <label>Meta 1</label>
+              <textarea placeholder="Ex.: Expor ideias de melhoria de processo ao menos 1x por semana nas reuniões."></textarea>
+              <div class="goal-line">Indicador de progresso:</div>
+              <textarea placeholder="Ex.: nº de sugestões levadas / feedback da liderança." style="min-height:48px;"></textarea>
+            </div>
+
+            <div class="goal-item">
+              <label>Meta 2</label>
+              <textarea placeholder="Ex.: Separar problema profissional de sentimento pessoal em situações de pressão."></textarea>
+              <div class="goal-line">Indicador de progresso:</div>
+              <textarea placeholder="Ex.: nº de situações em que conseguiu se posicionar sem levar para o pessoal." style="min-height:48px;"></textarea>
+            </div>
+
+            <div class="goal-item">
+              <label>Meta 3</label>
+              <textarea placeholder="Ex.: Criar um ritual simples de celebrar pequenas vitórias semanais."></textarea>
+              <div class="goal-line">Indicador de progresso:</div>
+              <textarea placeholder="Ex.: registros de celebração / percepção de energia ao fim da semana." style="min-height:48px;"></textarea>
+            </div>
+          </div>
+
+          <button class="btn-add-meta" onclick="addMeta('goals-toni')">+ Adicionar meta</button>
+        </div>
+
+        <!-- Comprometimento -->
+        <div class="section">
+          <div class="section-label">Comprometimento assumido</div>
+          <textarea placeholder="Registre em 3–4 linhas o que foi combinado como responsabilidade dele no PDI."></textarea>
+        </div>
+
+        <!-- Observações -->
+        <div class="section">
+          <div class="section-label">Observações da consultora</div>
+          <textarea placeholder="Anotações só suas (triggers, limites, cuidado com carga, contexto pessoal, etc.)."></textarea>
+        </div>
+      </section>
+
+      <!-- Coluna lateral -->
+      <aside class="panel">
+        <div class="side-section">
+          <h3>Resumo comportamental (DISC)</h3>
+          <p><span class="badge">Driver central: Estabilidade + Integridade do sistema</span></p>
+          <p class="hint">
+            Medo básico: instabilidade estratégica ou trair a confiança de quem depende dele.<br>
+            Motivação principal: integridade do sistema, honestidade e perseverança — fazer o certo mesmo quando ninguém está olhando.<br><br>
+            Valor para a organização: confiança operacional máxima em contas estratégicas e projetos de longo prazo, com execução constante e rigorosa.
+          </p>
+        </div>
+
+        <div class="side-section">
+          <h3>Diagnóstico de desenvolvimento</h3>
+          <p class="hint">
+            · Separar problemas profissionais de sentimentos pessoais para não sofrer em silêncio.<br>
+            · Expor suas ideias de melhoria de processo, não esperando que alguém pergunte para você falar.<br>
+            · Celebrar as pequenas vitórias, evitando focar apenas no que ainda falta para atingir a perfeição.
+          </p>
+        </div>
+
+        <!-- Check-ins -->
+        <div class="side-section">
+          <h3>Ciclos de check-in</h3>
+
+          <div class="checkin-list" id="checkins-toni">
+            <div class="checkin-item">
+              <div class="checkin-label">Check-in 1</div>
+              <div class="checkin-row">
+                <div class="field">
+                  <label>Data</label>
+                  <input type="date" style="font-size:11px;">
+                </div>
+                <div class="field">
+                  <label>Foco / tema</label>
+                  <input type="text" placeholder="Tema central" style="font-size:11px;">
+                </div>
+                <div class="field">
+                  <label>Avanço percebido</label>
+                  <input type="text" placeholder="0–100% ou narrativa" style="font-size:11px;">
+                </div>
+              </div>
+              <label>Observações</label>
+              <textarea placeholder="Registre pontos-chave da conversa, reações, próximas ações combinadas..."></textarea>
+            </div>
+          </div>
+
+          <button class="btn-add-meta" style="margin-top:10px;" onclick="addCheckin('checkins-toni')">+ Novo ciclo de check-in</button>
+
+          <p class="hint">
+            Perguntas fixas: "O que mudou?", "Onde percebe avanço?", "O que ainda te trava?".
+          </p>
+        </div>
+
+        <!-- Painel visual -->
+        <div class="side-section">
+          <h3>Painel visual do PDI</h3>
+          <ul class="quick">
+            <li><strong>Estado atual:</strong> <span style="color:var(--muted);">preencher em 1 frase.</span></li>
+            <li><strong>Direção desejada:</strong> <span style="color:var(--muted);">onde este PDI quer chegar.</span></li>
+            <li><strong>Riscos:</strong> <span style="color:var(--muted);">sofrer em silêncio, não expor ideias, focar só no que falta.</span></li>
+          </ul>
+          <div class="heatbar">
+            <div class="heatbar-fill" style="width: 0%;"></div>
+          </div>
+          <p class="hint">Ajuste o % manualmente conforme o avanço percebido nas sessões.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    let metaCount = { 'goals-toni': 3 };
+    let checkinCount = { 'checkins-toni': 1 };
+
+    function addMeta(listId) {
+      metaCount[listId] = (metaCount[listId] || 0) + 1;
+      const n = metaCount[listId];
+      const list = document.getElementById(listId);
+      const div = document.createElement('div');
+      div.className = 'goal-item';
+      div.innerHTML = `
+        <button class="remove-goal" onclick="this.parentElement.remove()" title="Remover meta">✕</button>
+        <label>Meta ${n}</label>
+        <textarea placeholder="Descreva a meta de desenvolvimento..."></textarea>
+        <div class="goal-line">Indicador de progresso:</div>
+        <textarea placeholder="Como vamos medir o avanço desta meta?" style="min-height:48px;"></textarea>
+      `;
+      list.appendChild(div);
+    }
+
+    function addCheckin(listId) {
+      checkinCount[listId] = (checkinCount[listId] || 0) + 1;
+      const n = checkinCount[listId];
+      const list = document.getElementById(listId);
+      const div = document.createElement('div');
+      div.className = 'checkin-item';
+      div.innerHTML = `
+        <div class="checkin-label">Check-in ${n}</div>
+        <div class="checkin-row">
+          <div class="field">
+            <label>Data</label>
+            <input type="date" style="font-size:11px;">
+          </div>
+          <div class="field">
+            <label>Foco / tema</label>
+            <input type="text" placeholder="Tema central" style="font-size:11px;">
+          </div>
+          <div class="field">
+            <label>Avanço percebido</label>
+            <input type="text" placeholder="0–100% ou narrativa" style="font-size:11px;">
+          </div>
+        </div>
+        <label>Observações</label>
+        <textarea placeholder="Registre pontos-chave da conversa, reações, próximas ações combinadas..."></textarea>
+      `;
+      list.appendChild(div);
+    }
+  </script>
+</body>
+</html>
